@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard - tradewithforid</title>
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: #0f172a; color: #f8fafc; font-family: 'Open Sans', sans-serif; padding: 25px 15px; }
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 15px;
+    }
+    header h1 { font-size: 22px; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
+
+    /* Stats Grid */
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 30px; }
+    .stat-card {
+      background: #1e293b;
+      padding: 20px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      background: #0284c7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+    .stat-info h3 { font-size: 26px; font-weight: 700; }
+    .stat-info p { font-size: 12px; color: #94a3b8; }
+
+    /* Cards */
+    .upload-card, .table-card {
+      background: #1e293b;
+      padding: 25px;
+      border-radius: 8px;
+      border: 1px solid #334155;
+      margin-bottom: 30px;
+    }
+    .upload-card h2, .table-card h2 { font-size: 18px; margin-bottom: 18px; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
+    .form-group { margin-bottom: 18px; }
+    label { display: block; font-size: 13px; margin-bottom: 6px; color: #cbd5e1; font-weight: 600; }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 12px;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      color: #fff;
+      font-family: inherit;
+    }
+    textarea { min-height: 100px; }
+
+    /* File Input Styles */
+    .file-input-wrapper { display: flex; flex-direction: column; gap: 10px; }
+    .file-select-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #0284c7;
+      color: #fff;
+      padding: 10px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      width: fit-content;
+      transition: 0.3s;
+    }
+    .file-select-btn:hover { background: #0369a1; }
+    input[type="file"] { display: none; }
+
+    .image-preview-container {
+      display: none;
+      margin-top: 10px;
+      position: relative;
+      width: fit-content;
+    }
+    .image-preview-container img {
+      max-width: 250px;
+      max-height: 160px;
+      border-radius: 6px;
+      border: 2px solid #38bdf8;
+      object-fit: cover;
+    }
+    .remove-img-btn {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .btn-publish {
+      background: #10b981;
+      color: #fff;
+      padding: 12px 26px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-publish:hover { background: #059669; }
+    .btn-publish:disabled { background: #64748b; cursor: not-allowed; }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
+    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #334155; vertical-align: middle; }
+    th { color: #38bdf8; }
+
+    .table-thumb {
+      width: 55px;
+      height: 40px;
+      border-radius: 4px;
+      object-fit: cover;
+      background: #0f172a;
+    }
+
+    .btn-delete {
+      background: #ef4444;
+      color: #fff;
+      border: none;
+      padding: 7px 14px;
+      border-radius: 4px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: 0.2s;
+    }
+    .btn-delete:hover { background: #dc2626; }
+
+    .btn-reset {
+      background: #0284c7;
+      color: #fff;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: 0.2s;
+    }
+    .btn-reset:hover { background: #0369a1; }
+
+    .badge-verified {
+      background: #064e3b;
+      color: #34d399;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid #059669;
+    }
+    .badge-unverified {
+      background: #451a03;
+      color: #fbbf24;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid #d97706;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <h1><i class="fas fa-chart-line"></i> tradewithforid Admin Dashboard</h1>
+      <a href="index.html" target="_blank" style="color:#38bdf8; font-weight:600;"><i class="fas fa-external-link-alt"></i> View Website</a>
+    </header>
+
+    <!-- Analytics Dashboard -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon"><i class="fas fa-users"></i></div>
+        <div class="stat-info">
+          <h3 id="totalUsersCount">0</h3>
+          <p>Total Registered Users</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#10b981;"><i class="fas fa-eye"></i></div>
+        <div class="stat-info">
+          <h3 id="recentVisitorsCount">0</h3>
+          <p>Visitors (Past 24 Hours)</p>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#f59e0b;"><i class="fas fa-robot"></i></div>
+        <div class="stat-info">
+          <h3 id="totalPostsCount">0</h3>
+          <p>Total Posts / Bots</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Post / Bot Upload Form -->
+    <div class="upload-card">
+      <h2><i class="fas fa-upload"></i> Publish New Bot / Post</h2>
+
+      <div class="form-group">
+        <label>Post / Bot Title:</label>
+        <input type="text" id="postTitle" placeholder="e.g. Quotex 1M Sure Shot Sniping Bot..." required />
+      </div>
+
+      <!-- Image Upload Section -->
+      <div class="form-group">
+        <label><i class="fas fa-image"></i> Upload Thumbnail Image:</label>
+        <div class="file-input-wrapper">
+          <label class="file-select-btn" for="postImageFileInput">
+            <i class="fas fa-folder-open"></i> Select Image from Device
+          </label>
+          <input type="file" id="postImageFileInput" accept="image/*" />
+          
+          <div class="image-preview-container" id="imagePreviewBox">
+            <img id="imagePreview" src="" alt="Selected Preview" />
+            <button type="button" class="remove-img-btn" id="removeImgBtn" title="Remove">&times;</button>
+          </div>
+        </div>
+        <input type="text" id="postThumbnailUrl" placeholder="Or paste image URL (https://...)" style="margin-top:8px;" />
+      </div>
+
+      <!-- HTML File Upload Section -->
+      <div class="form-group">
+        <label><i class="fas fa-code"></i> Upload HTML Code File (.html or .txt):</label>
+        <div class="file-input-wrapper">
+          <label class="file-select-btn" for="htmlFileInput" style="background:#475569;">
+            <i class="fas fa-file-code"></i> Select .html / .txt Bot File
+          </label>
+          <input type="file" id="htmlFileInput" accept=".html,.htm,.txt" />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Post Description (Text displayed on the article page):</label>
+        <textarea id="postDescription" placeholder="Write instructions, rules, or details about the bot..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Full HTML Code (Runs in fullscreen bot mode):</label>
+        <textarea id="postHtmlContent" placeholder="If you uploaded an HTML file, the code will appear here automatically. You can also paste raw HTML code directly..."></textarea>
+      </div>
+
+      <button class="btn-publish" id="publishBtn">
+        <i class="fas fa-paper-plane"></i> <span id="publishBtnText">Publish Post</span>
+      </button>
+    </div>
+
+    <!-- Manage & Delete Posts / Bots Table -->
+    <div class="table-card">
+      <h2><i class="fas fa-tasks"></i> Manage Published Posts & Bots</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Thumbnail</th>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Published Date</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="postsTableBody">
+          <tr><td colspan="5">Loading posts...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Registered Users Management Table -->
+    <div class="table-card">
+      <h2><i class="fas fa-user-shield"></i> Registered Users Directory</h2>
+      <p style="font-size:12px; color:#94a3b8; margin-bottom:12px;">
+        * For security reasons, plain passwords are encrypted by Google. You can view user Gmail addresses and send password reset links below.
+      </p>
+      <table>
+        <thead>
+          <tr>
+            <th>User Gmail</th>
+            <th>Registered Date</th>
+            <th>Password Management</th>
+          </tr>
+        </thead>
+        <tbody id="userTableBody">
+          <tr><td colspan="3">Loading users...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- Firebase Scripts -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { 
+      getFirestore, collection, addDoc, getDocs, query, serverTimestamp, where, Timestamp, doc, deleteDoc 
+    } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
+    import { 
+      getStorage, ref, uploadBytes, getDownloadURL 
+    } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
+    import { 
+      getAuth, sendPasswordResetEmail 
+    } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBDMrAFCAdgNniHDffFcq96WLA8S6I_EUI",
+      authDomain: "trade-with-forid.firebaseapp.com",
+      projectId: "trade-with-forid",
+      storageBucket: "trade-with-forid.firebasestorage.app",
+      messagingSenderId: "485744527098",
+      appId: "1:485744527098:web:e699237d279b13054aeb43"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+    const auth = getAuth(app);
+
+    let selectedImageFile = null;
+    let hasHtmlFile = false;
+
+    // 1. Image Preview
+    const imageInput = document.getElementById("postImageFileInput");
+    const previewBox = document.getElementById("imagePreviewBox");
+    const previewImg = document.getElementById("imagePreview");
+    const removeImgBtn = document.getElementById("removeImgBtn");
+
+    imageInput.addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        selectedImageFile = file;
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          previewImg.src = evt.target.result;
+          previewBox.style.display = "block";
+        };
+        reader.readAsDataURL(file);
+      }
+    });
+
+    removeImgBtn.addEventListener("click", function() {
+      selectedImageFile = null;
+      imageInput.value = "";
+      previewBox.style.display = "none";
+      previewImg.src = "";
+    });
+
+    // 2. HTML File Reader
+    document.getElementById("htmlFileInput").addEventListener("change", function(e) {
+      const file = e.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          document.getElementById("postHtmlContent").value = evt.target.result;
+          hasHtmlFile = true;
+        };
+        reader.readAsText(file);
+      }
+    });
+
+    // 3. Publish Action
+    document.getElementById("publishBtn").onclick = async () => {
+      const title = document.getElementById("postTitle").value.trim();
+      const description = document.getElementById("postDescription").value.trim();
+      const htmlContent = document.getElementById("postHtmlContent").value.trim();
+      let thumbnailUrl = document.getElementById("postThumbnailUrl").value.trim();
+
+      if (!title) return alert("Please enter a title.");
+
+      const publishBtn = document.getElementById("publishBtn");
+      const publishBtnText = document.getElementById("publishBtnText");
+
+      try {
+        publishBtn.disabled = true;
+        publishBtnText.innerText = "Publishing post...";
+
+        if (selectedImageFile) {
+          try {
+            const fileRef = ref(storage, `posts/${Date.now()}_${selectedImageFile.name}`);
+            const snapshot = await uploadBytes(fileRef, selectedImageFile);
+            thumbnailUrl = await getDownloadURL(snapshot.ref);
+          } catch(storageErr) {
+            thumbnailUrl = previewImg.src;
+          }
+        }
+
+        await addDoc(collection(db, "posts"), {
+          title: title,
+          thumbnail: thumbnailUrl || "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop",
+          description: description,
+          htmlContent: htmlContent,
+          isHtml: hasHtmlFile || (htmlContent.length > 0),
+          category: hasHtmlFile || (htmlContent.length > 0) ? "Bot" : "Post",
+          createdAt: serverTimestamp()
+        });
+
+        alert("Post published successfully!");
+        location.reload();
+      } catch(e) {
+        alert("Failed to publish: " + e.message);
+      } finally {
+        publishBtn.disabled = false;
+        publishBtnText.innerText = "Publish Post";
+      }
+    };
+
+    // 4. Delete Post Function
+    window.deletePost = async (id, title) => {
+      const confirmDelete = confirm(`Are you sure you want to delete this item:\n"${title}"?`);
+      if (confirmDelete) {
+        try {
+          await deleteDoc(doc(db, "posts", id));
+          alert("Item deleted successfully!");
+          loadAdminData();
+        } catch(err) {
+          alert("Error deleting item: " + err.message);
+        }
+      }
+    };
+
+    // 5. Send Password Reset Email Function
+    window.sendResetEmail = async (email) => {
+      if (confirm(`Send password reset email to:\n${email}?`)) {
+        try {
+          await sendPasswordResetEmail(auth, email);
+          alert(`Password reset link sent to ${email} successfully!`);
+        } catch(err) {
+          alert("Error sending reset email: " + err.message);
+        }
+      }
+    };
+
+    // 6. Load Analytics, Posts & Users
+    async function loadAdminData() {
+      // 6.1 Load Posts Table
+      const postsTable = document.getElementById("postsTableBody");
+      try {
+        const postsSnap = await getDocs(collection(db, "posts"));
+        document.getElementById("totalPostsCount").innerText = postsSnap.size;
+        postsTable.innerHTML = "";
+
+        if (postsSnap.empty) {
+          postsTable.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8;">No posts or bots uploaded yet.</td></tr>`;
+        } else {
+          postsSnap.forEach(documentItem => {
+            const p = documentItem.data();
+            const id = documentItem.id;
+            const thumb = p.thumbnail || "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=100&auto=format&fit=crop";
+            const dateStr = p.createdAt ? new Date(p.createdAt.toDate()).toLocaleDateString() : 'Recent';
+            const isBot = p.isHtml ? `<span style="color:#10b981; font-weight:700;"><i class="fas fa-robot"></i> Bot</span>` : `Post`;
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td><img src="${thumb}" class="table-thumb" alt="${p.title}" /></td>
+              <td><b>${p.title}</b></td>
+              <td>${isBot}</td>
+              <td>${dateStr}</td>
+              <td>
+                <button class="btn-delete" onclick="deletePost('${id}', '${p.title.replace(/'/g, "\\'")}')">
+                  <i class="fas fa-trash-alt"></i> Delete
+                </button>
+              </td>
+            `;
+            postsTable.appendChild(tr);
+          });
+        }
+      } catch(e) {
+        postsTable.innerHTML = `<tr><td colspan="5" style="color:#ef4444;">Failed to load posts: ${e.message}</td></tr>`;
+      }
+
+      // 6.2 Load Registered Users Table
+      const usersSnap = await getDocs(collection(db, "users"));
+      document.getElementById("totalUsersCount").innerText = usersSnap.size;
+
+      const userTable = document.getElementById("userTableBody");
+      userTable.innerHTML = "";
+      if (usersSnap.empty) {
+        userTable.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#94a3b8;">No registered users yet.</td></tr>`;
+      } else {
+        usersSnap.forEach(uDoc => {
+          const u = uDoc.data();
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><i class="fas fa-envelope" style="color:#38bdf8; margin-right:6px;"></i> <b>${u.email}</b></td>
+            <td>${u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString() : 'N/A'}</td>
+            <td>
+              <button class="btn-reset" onclick="sendResetEmail('${u.email}')">
+                <i class="fas fa-key"></i> Send Reset Link
+              </button>
+            </td>
+          `;
+          userTable.appendChild(tr);
+        });
+      }
+
+      // 6.3 Past 24 Hours Visitors
+      try {
+        const past24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000);
+        const q = query(collection(db, "analytics"), where("timestamp", ">=", Timestamp.fromDate(past24Hours)));
+        const analyticsSnap = await getDocs(q);
+        document.getElementById("recentVisitorsCount").innerText = analyticsSnap.size;
+      } catch(e) {}
+    }
+
+    loadAdminData();
+  </script>
+</body>
+</html>
