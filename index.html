@@ -10,7 +10,7 @@
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #0f172a; color: #f8fafc; font-family: 'Open Sans', sans-serif; padding: 25px 15px; }
-    .container { max-width: 1050px; margin: 0 auto; }
+    .container { max-width: 1100px; margin: 0 auto; }
 
     header {
       display: flex;
@@ -26,27 +26,27 @@
     .btn-lock:hover { background: #dc2626; }
 
     /* Stats Grid */
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 30px; }
+    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 30px; }
     .stat-card {
       background: #1e293b;
-      padding: 20px;
+      padding: 18px;
       border-radius: 8px;
       border: 1px solid #334155;
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 14px;
     }
     .stat-icon {
-      width: 50px;
-      height: 50px;
+      width: 48px;
+      height: 48px;
       border-radius: 8px;
       background: #0284c7;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 20px;
     }
-    .stat-info h3 { font-size: 26px; font-weight: 700; }
+    .stat-info h3 { font-size: 24px; font-weight: 700; }
     .stat-info p { font-size: 12px; color: #94a3b8; }
 
     /* Cards */
@@ -133,13 +133,86 @@
     }
 
     table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-    th, td { padding: 12px; text-align: left; border-bottom: 1px solid #334155; vertical-align: middle; }
+    th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid #334155; vertical-align: middle; }
     th { color: #38bdf8; background: #0f172a; }
     .table-thumb { width: 55px; height: 40px; border-radius: 4px; object-fit: cover; }
-    .btn-delete { background: #ef4444; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 12px; }
+    
+    .btn-delete { background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 12px; }
     .btn-delete:hover { background: #dc2626; }
-    .btn-reset { background: #0284c7; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
+    .btn-reset { background: #0284c7; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
     .btn-copy { background: #334155; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
+
+    /* VIP & Status Badges */
+    .badge-vip {
+      background: #78350f;
+      color: #f59e0b;
+      border: 1px solid #f59e0b;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .badge-free {
+      background: #0f2e4a;
+      color: #38bdf8;
+      border: 1px solid #0284c7;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 11px;
+    }
+    .badge-expired {
+      background: #450a0a;
+      color: #f87171;
+      border: 1px solid #ef4444;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 11px;
+    }
+
+    /* VIP Action Buttons */
+    .btn-vip-on {
+      background: #f59e0b;
+      color: #000;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .btn-vip-on:hover { background: #d97706; }
+
+    .btn-vip-off {
+      background: #475569;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 11px;
+    }
+    .btn-vip-off:hover { background: #334155; }
+
+    .btn-extend-days {
+      background: #10b981;
+      color: #fff;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 4px;
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 11px;
+    }
+    .btn-extend-days:hover { background: #059669; }
 
     .status-active { color: #10b981; font-weight: bold; }
     .status-used { color: #ef4444; }
@@ -200,6 +273,13 @@
         </div>
       </div>
       <div class="stat-card">
+        <div class="stat-icon" style="background:#f59e0b;"><i class="fas fa-crown"></i></div>
+        <div class="stat-info">
+          <h3 id="vipUsersCount" style="color:#f59e0b;">0</h3>
+          <p>Total VIP Users</p>
+        </div>
+      </div>
+      <div class="stat-card">
         <div class="stat-icon" style="background:#10b981;"><i class="fas fa-eye"></i></div>
         <div class="stat-info">
           <h3 id="recentVisitorsCount">0</h3>
@@ -207,14 +287,14 @@
         </div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon" style="background:#f59e0b;"><i class="fas fa-robot"></i></div>
+        <div class="stat-icon" style="background:#8b5cf6;"><i class="fas fa-robot"></i></div>
         <div class="stat-info">
           <h3 id="totalPostsCount">0</h3>
           <p>Total Posts / Bots</p>
         </div>
       </div>
       <div class="stat-card">
-        <div class="stat-icon" style="background:#8b5cf6;"><i class="fas fa-key"></i></div>
+        <div class="stat-icon" style="background:#6366f1;"><i class="fas fa-key"></i></div>
         <div class="stat-info">
           <h3 id="totalKeysCount">0</h3>
           <p>Active 6-Digit Keys</p>
@@ -222,10 +302,43 @@
       </div>
     </div>
 
+    <!-- User Management Table (VIP & Access Control) -->
+    <div class="table-card" style="border-left: 5px solid #f59e0b;">
+      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
+        <h2 style="margin-bottom:0;"><i class="fas fa-users-cog"></i> User Access & VIP Management</h2>
+        
+        <!-- Search Users Input -->
+        <div style="width:280px;">
+          <input type="text" id="userSearchInput" placeholder="Search user by email or name..." style="padding:8px 12px; font-size:13px;" />
+        </div>
+      </div>
+
+      <p style="font-size:12.5px; color:#94a3b8; margin-bottom:12px;">
+        ইউজারকে <b>Make VIP</b> করে দিলে সে আজীবন কোনো কি (Key) ছাড়াই আনলিমিটেড বট চালাতে পারবে। ফ্রি ইউজারদের মেয়াদ বাড়াতে <b>+30 Days</b> চাপুন।
+      </p>
+
+      <div style="overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>User Details</th>
+              <th>Membership</th>
+              <th>Expiry Date</th>
+              <th>VIP Control</th>
+              <th>Manage / Reset</th>
+            </tr>
+          </thead>
+          <tbody id="userTableBody">
+            <tr><td colspan="5" style="text-align:center;">Loading users...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <!-- 6-Digit Activation Key Generator Section -->
     <div class="upload-card" style="border-left: 5px solid #10b981;">
-      <h2><i class="fas fa-key"></i> 6-Digit Key Generator (ইউজারদের বট অ্যাক্টিভেশনের জন্য)</h2>
-      <p style="font-size:13px; color:#94a3b8; margin-bottom:15px;">ইউজারের ৩ দিনের ফ্রি ট্রায়াল শেষ হলে যে ৬ সংখ্যার কোড দিতে হবে তা এখান থেকে তৈরি করুন।</p>
+      <h2><i class="fas fa-key"></i> 6-Digit Key Generator (ফ্রি ইউজারদের কোড)</h2>
+      <p style="font-size:13px; color:#94a3b8; margin-bottom:15px;">যেসব ফ্রি ইউজারদের ৩ দিনের ট্রায়াল শেষ, তাদেরকে দেওয়ার জন্য ৬ সংখ্যার কোড তৈরি করুন।</p>
 
       <div style="display:flex; flex-wrap:wrap; gap:15px; align-items:flex-end;">
         <div class="form-group" style="flex:1; min-width:220px; margin-bottom:0;">
@@ -343,30 +456,13 @@
       </table>
     </div>
 
-    <!-- User List -->
-    <div class="table-card">
-      <h2><i class="fas fa-user-shield"></i> Registered Users Directory</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>User Gmail</th>
-            <th>Registered Date</th>
-            <th>Password Management</th>
-          </tr>
-        </thead>
-        <tbody id="userTableBody">
-          <tr><td colspan="3">Loading users...</td></tr>
-        </tbody>
-      </table>
-    </div>
-
   </div>
 
   <!-- Firebase Scripts -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
     import { 
-      getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, query, serverTimestamp, where, Timestamp, deleteDoc, onSnapshot, orderBy 
+      getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, query, serverTimestamp, where, Timestamp, deleteDoc, onSnapshot, orderBy 
     } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
     import { 
       getStorage, ref, uploadBytes, getDownloadURL 
@@ -389,11 +485,9 @@
     const storage = getStorage(app);
     const auth = getAuth(app);
 
-    // ========================================================
-    // ⚠️ আপনার অ্যাডমিন সিক্রেট কি (Secret Key) এখানে দেওয়া আছে:
-    // আপনি চাইলে এটি পরিবর্তন করতে পারেন
-    // ========================================================
     const ADMIN_SECRET_KEY = "FORID786"; 
+
+    let cachedUsers = [];
 
     // 1. Session Check (লক স্ক্রিন হ্যান্ডলার)
     function checkAdminSession() {
@@ -641,10 +735,133 @@
     };
 
     // ========================================================
-    // 6. পোস্ট ও অ্যানালিটিক্স ডেটা লোড
+    // 6. ইউজার VIP ও এক্সেস কন্ট্রোল ফাংশনস
+    // ========================================================
+    window.toggleUserVip = async (uid, currentVipStatus) => {
+      const newStatus = !currentVipStatus;
+      const msg = newStatus 
+        ? "এই ইউজারকে VIP একটিভ করতে চান? (সে কোনো কোড ছাড়াই সারাজীবন আনলিমিটেড চালাতে পারবে)" 
+        : "এই ইউজারের VIP বাতিল করতে চান?";
+
+      if (confirm(msg)) {
+        try {
+          await updateDoc(doc(db, "users", uid), {
+            isVip: newStatus
+          });
+          alert(newStatus ? "User is now VIP Member!" : "User VIP status removed.");
+          loadAdminData();
+        } catch(err) {
+          alert("Failed to update VIP status: " + err.message);
+        }
+      }
+    };
+
+    window.extendUserDays = async (uid, currentExpiry, daysToAdd) => {
+      if (confirm(`এই ইউজারের এক্সেস মেয়াদ আরও ${daysToAdd} দিন বাড়াতে চান?`)) {
+        try {
+          const now = Date.now();
+          const baseTime = (currentExpiry && currentExpiry > now) ? currentExpiry : now;
+          const newExpiry = baseTime + (daysToAdd * 24 * 60 * 60 * 1000);
+
+          await updateDoc(doc(db, "users", uid), {
+            accessExpiresAt: newExpiry
+          });
+
+          alert(`এক্সেস মেয়াদ ${daysToAdd} দিন বাড়ানো হয়েছে!`);
+          loadAdminData();
+        } catch(err) {
+          alert("Failed to extend days: " + err.message);
+        }
+      }
+    };
+
+    window.deleteUserRecord = async (uid, email) => {
+      if (confirm(`Are you sure you want to delete user ${email} from the database?`)) {
+        try {
+          await deleteDoc(doc(db, "users", uid));
+          alert("User record deleted successfully!");
+          loadAdminData();
+        } catch(err) {
+          alert("Error: " + err.message);
+        }
+      }
+    };
+
+    // ইউজার সার্চ অপশন
+    document.getElementById("userSearchInput").addEventListener("input", (e) => {
+      const q = e.target.value.toLowerCase().trim();
+      const filtered = cachedUsers.filter(u => 
+        (u.email && u.email.toLowerCase().includes(q)) || 
+        (u.name && u.name.toLowerCase().includes(q))
+      );
+      renderUserTable(filtered);
+    });
+
+    function renderUserTable(users) {
+      const userTable = document.getElementById("userTableBody");
+      userTable.innerHTML = "";
+
+      if (!users || users.length === 0) {
+        userTable.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding:20px;">No users found.</td></tr>`;
+        return;
+      }
+
+      users.forEach(u => {
+        const isVip = u.isVip === true;
+        const now = Date.now();
+        const hasValidTrial = u.accessExpiresAt && u.accessExpiresAt > now;
+
+        // স্ট্যাটাস ব্যাজ নির্বাচন
+        let badgeHtml = '';
+        let expiryHtml = '';
+
+        if (isVip) {
+          badgeHtml = `<span class="badge-vip"><i class="fas fa-crown"></i> VIP Member</span>`;
+          expiryHtml = `<b style="color:#f59e0b;">Unlimited (Lifetime)</b>`;
+        } else if (hasValidTrial) {
+          const daysLeft = Math.ceil((u.accessExpiresAt - now) / (1000 * 60 * 60 * 24));
+          badgeHtml = `<span class="badge-free">Active Free Trial (${daysLeft}d left)</span>`;
+          expiryHtml = new Date(u.accessExpiresAt).toLocaleDateString();
+        } else {
+          badgeHtml = `<span class="badge-expired">Trial Expired</span>`;
+          expiryHtml = `<span style="color:#ef4444;">Expired</span>`;
+        }
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>
+            <b>${u.name || u.email.split('@')[0]}</b><br/>
+            <span style="font-size:11.5px; color:#94a3b8;"><i class="fas fa-envelope"></i> ${u.email}</span>
+          </td>
+          <td>${badgeHtml}</td>
+          <td>${expiryHtml}</td>
+          <td>
+            ${isVip 
+              ? `<button class="btn-vip-off" onclick="toggleUserVip('${u.id}', true)"><i class="fas fa-times-circle"></i> Remove VIP</button>` 
+              : `<button class="btn-vip-on" onclick="toggleUserVip('${u.id}', false)"><i class="fas fa-crown"></i> Make VIP</button>`
+            }
+            <button class="btn-extend-days" style="margin-left:4px;" onclick="extendUserDays('${u.id}', ${u.accessExpiresAt || 0}, 30)">
+              +30 Days
+            </button>
+          </td>
+          <td>
+            <button class="btn-reset" onclick="sendResetEmail('${u.email}')" title="Send Password Reset Link">
+              <i class="fas fa-key"></i> Reset
+            </button>
+            <button class="btn-delete" style="padding:5px 8px; margin-left:3px;" onclick="deleteUserRecord('${u.id}', '${u.email}')" title="Delete User">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        `;
+        userTable.appendChild(tr);
+      });
+    }
+
+    // ========================================================
+    // 7. পোস্ট ও অ্যানালিটিক্স ডেটা লোড
     // ========================================================
     async function loadAdminData() {
-      // সেটিংস লোড
+      // Settings Load
       try {
         const settingsDoc = await getDoc(doc(db, "settings", "general"));
         if (settingsDoc.exists()) {
@@ -659,7 +876,7 @@
         }
       } catch(e) {}
 
-      // পোস্ট টেবিল লোড
+      // Posts Table Load
       const postsTable = document.getElementById("postsTableBody");
       try {
         const postsSnap = await getDocs(collection(db, "posts"));
@@ -693,34 +910,27 @@
         }
       } catch(e) {}
 
-      // ইউজার টেবিল লোড
+      // Users Load
       try {
         const usersSnap = await getDocs(collection(db, "users"));
         document.getElementById("totalUsersCount").innerText = usersSnap.size;
 
-        const userTable = document.getElementById("userTableBody");
-        userTable.innerHTML = "";
-        if (usersSnap.empty) {
-          userTable.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#94a3b8;">No registered users yet.</td></tr>`;
-        } else {
-          usersSnap.forEach(uDoc => {
-            const u = uDoc.data();
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-              <td><i class="fas fa-envelope" style="color:#38bdf8; margin-right:6px;"></i> <b>${u.email}</b></td>
-              <td>${u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString() : 'N/A'}</td>
-              <td>
-                <button class="btn-reset" onclick="sendResetEmail('${u.email}')">
-                  <i class="fas fa-key"></i> Send Reset Link
-                </button>
-              </td>
-            `;
-            userTable.appendChild(tr);
-          });
-        }
-      } catch(e) {}
+        cachedUsers = [];
+        let vipCount = 0;
 
-      // ভিজিটর সংখ্যা
+        usersSnap.forEach(uDoc => {
+          const u = { id: uDoc.id, ...uDoc.data() };
+          if (u.isVip === true) vipCount++;
+          cachedUsers.push(u);
+        });
+
+        document.getElementById("vipUsersCount").innerText = vipCount;
+        renderUserTable(cachedUsers);
+      } catch(e) {
+        console.error("Users load error: ", e);
+      }
+
+      // Visitors Analytics
       try {
         const past24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000);
         const q = query(collection(db, "analytics"), where("timestamp", ">=", Timestamp.fromDate(past24Hours)));
