@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - tradewithforid</title>
+  <title>Admin Dashboard - Control Panel</title>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
 
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body { background: #0f172a; color: #f8fafc; font-family: 'Open Sans', sans-serif; padding: 25px 15px; }
-    .container { max-width: 1000px; margin: 0 auto; }
+    .container { max-width: 1050px; margin: 0 auto; }
 
     header {
       display: flex;
@@ -21,6 +21,9 @@
       padding-bottom: 15px;
     }
     header h1 { font-size: 22px; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
+    .header-links { display: flex; align-items: center; gap: 12px; }
+    .btn-lock { background: #ef4444; color: #fff; padding: 7px 14px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; font-size: 13px; }
+    .btn-lock:hover { background: #dc2626; }
 
     /* Stats Grid */
     .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; margin-bottom: 30px; }
@@ -57,7 +60,7 @@
     .upload-card h2, .table-card h2 { font-size: 18px; margin-bottom: 18px; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
     .form-group { margin-bottom: 18px; }
     label { display: block; font-size: 13px; margin-bottom: 6px; color: #cbd5e1; font-weight: 600; }
-    input[type="text"], textarea {
+    input[type="text"], input[type="number"], input[type="password"], textarea {
       width: 100%;
       padding: 12px;
       background: #0f172a;
@@ -68,7 +71,22 @@
     }
     textarea { min-height: 100px; }
 
-    /* File Input Styles */
+    /* Buttons */
+    .btn-action {
+      background: #10b981;
+      color: #fff;
+      padding: 12px 26px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-action:hover { background: #059669; }
+
     .file-input-wrapper { display: flex; flex-direction: column; gap: 10px; }
     .file-select-btn {
       display: inline-flex;
@@ -82,9 +100,7 @@
       font-size: 13px;
       font-weight: 600;
       width: fit-content;
-      transition: 0.3s;
     }
-    .file-select-btn:hover { background: #0369a1; }
     input[type="file"] { display: none; }
 
     .image-preview-container {
@@ -111,99 +127,67 @@
       height: 22px;
       border-radius: 50%;
       cursor: pointer;
-      font-size: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
     }
 
-    .btn-publish {
-      background: #10b981;
-      color: #fff;
-      padding: 12px 26px;
-      border: none;
-      border-radius: 6px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .btn-publish:hover { background: #059669; }
-    .btn-publish:disabled { background: #64748b; cursor: not-allowed; }
-
-    /* Tables */
     table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
     th, td { padding: 12px; text-align: left; border-bottom: 1px solid #334155; vertical-align: middle; }
-    th { color: #38bdf8; }
-
-    .table-thumb {
-      width: 55px;
-      height: 40px;
-      border-radius: 4px;
-      object-fit: cover;
-      background: #0f172a;
-    }
-
-    .btn-delete {
-      background: #ef4444;
-      color: #fff;
-      border: none;
-      padding: 7px 14px;
-      border-radius: 4px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 12px;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: 0.2s;
-    }
+    th { color: #38bdf8; background: #0f172a; }
+    .table-thumb { width: 55px; height: 40px; border-radius: 4px; object-fit: cover; }
+    .btn-delete { background: #ef4444; color: #fff; border: none; padding: 7px 14px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 12px; }
     .btn-delete:hover { background: #dc2626; }
+    .btn-reset { background: #0284c7; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
+    .btn-copy { background: #334155; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
 
-    .btn-reset {
-      background: #0284c7;
-      color: #fff;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 11px;
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      transition: 0.2s;
-    }
-    .btn-reset:hover { background: #0369a1; }
+    .status-active { color: #10b981; font-weight: bold; }
+    .status-used { color: #ef4444; }
 
-    .badge-verified {
-      background: #064e3b;
-      color: #34d399;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 4px;
-      border: 1px solid #059669;
+    /* Admin Secret Key Gate */
+    #adminAuthGate {
+      max-width: 420px;
+      margin: 80px auto;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 10px;
+      padding: 35px 25px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    .badge-unverified {
-      background: #451a03;
-      color: #fbbf24;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 3px 8px;
-      border-radius: 4px;
-      border: 1px solid #d97706;
+    .key-lock-input {
+      letter-spacing: 4px;
+      text-align: center;
+      font-size: 18px !important;
+      font-weight: bold;
+      border: 2px solid #0284c7 !important;
+      margin-bottom: 15px;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
+  <!-- 1. Admin Verification Lock Screen -->
+  <div id="adminAuthGate">
+    <div style="font-size: 44px; color:#f59e0b; margin-bottom: 15px;"><i class="fas fa-user-shield"></i></div>
+    <h2 style="color:#fff; margin-bottom:8px; font-size: 20px;">Admin Access Gate</h2>
+    <p style="font-size:13px; color:#94a3b8; margin-bottom:20px;">অ্যাডমিন প্যানেল আনলক করতে আপনার সিক্রেট কি (Secret Key) দিন।</p>
+    
+    <input type="password" id="adminSecretKeyInput" class="key-lock-input" placeholder="Enter Secret Key..." autocomplete="off" />
+    <button class="btn-action" id="btnAdminUnlock" style="width:100%; justify-content:center; background:#10b981;">
+      <i class="fas fa-unlock"></i> Unlock Dashboard
+    </button>
+  </div>
+
+  <!-- 2. Main Admin Dashboard -->
+  <div class="container" id="adminPanelArea" style="display:none;">
+    
     <header>
-      <h1><i class="fas fa-chart-line"></i> tradewithforid Admin Dashboard</h1>
-      <a href="index.html" target="_blank" style="color:#38bdf8; font-weight:600;"><i class="fas fa-external-link-alt"></i> View Website</a>
+      <h1><i class="fas fa-chart-line"></i> <span id="adminPanelHeaderName">Admin Dashboard</span></h1>
+      <div class="header-links">
+        <a href="index.html" target="_blank" style="color:#38bdf8; font-weight:600;"><i class="fas fa-external-link-alt"></i> View Website</a>
+        <button class="btn-lock" id="btnLockAdmin"><i class="fas fa-lock"></i> Lock Panel</button>
+      </div>
     </header>
 
     <!-- Analytics Dashboard -->
@@ -229,9 +213,68 @@
           <p>Total Posts / Bots</p>
         </div>
       </div>
+      <div class="stat-card">
+        <div class="stat-icon" style="background:#8b5cf6;"><i class="fas fa-key"></i></div>
+        <div class="stat-info">
+          <h3 id="totalKeysCount">0</h3>
+          <p>Active 6-Digit Keys</p>
+        </div>
+      </div>
     </div>
 
-    <!-- Post / Bot Upload Form -->
+    <!-- 6-Digit Activation Key Generator Section -->
+    <div class="upload-card" style="border-left: 5px solid #10b981;">
+      <h2><i class="fas fa-key"></i> 6-Digit Key Generator (ইউজারদের বট অ্যাক্টিভেশনের জন্য)</h2>
+      <p style="font-size:13px; color:#94a3b8; margin-bottom:15px;">ইউজারের ৩ দিনের ফ্রি ট্রায়াল শেষ হলে যে ৬ সংখ্যার কোড দিতে হবে তা এখান থেকে তৈরি করুন।</p>
+
+      <div style="display:flex; flex-wrap:wrap; gap:15px; align-items:flex-end;">
+        <div class="form-group" style="flex:1; min-width:220px; margin-bottom:0;">
+          <label>মেয়াদ (কত দিন চলবে):</label>
+          <input type="number" id="keyDurationDays" value="30" placeholder="e.g. 7, 30, 90" />
+        </div>
+        <button class="btn-action" id="btnGenerateKey" style="background:#10b981; height:45px;">
+          <i class="fas fa-magic"></i> Generate 6-Digit Key
+        </button>
+      </div>
+
+      <div style="margin-top:20px; overflow-x:auto;">
+        <table>
+          <thead>
+            <tr>
+              <th>6-Digit Key</th>
+              <th>Validity</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody id="keysTableBody">
+            <tr><td colspan="4">Loading keys...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Website Settings Card (Change Site Name & Logo) -->
+    <div class="upload-card" style="border-left: 5px solid #38bdf8;">
+      <h2><i class="fas fa-sliders-h"></i> Website Settings (Change Site Name & Logo)</h2>
+      
+      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
+        <div class="form-group">
+          <label>Website Name:</label>
+          <input type="text" id="settingSiteName" placeholder="e.g. tradewithforid, ForidTradeX, etc." />
+        </div>
+        <div class="form-group">
+          <label>Website Logo URL:</label>
+          <input type="text" id="settingLogoUrl" placeholder="Image URL (https://...)" />
+        </div>
+      </div>
+
+      <button class="btn-action" id="saveSettingsBtn" style="background:#0284c7;">
+        <i class="fas fa-save"></i> Save Site Settings
+      </button>
+    </div>
+
+    <!-- Publish Form -->
     <div class="upload-card">
       <h2><i class="fas fa-upload"></i> Publish New Bot / Post</h2>
 
@@ -240,7 +283,6 @@
         <input type="text" id="postTitle" placeholder="e.g. Quotex 1M Sure Shot Sniping Bot..." required />
       </div>
 
-      <!-- Image Upload Section -->
       <div class="form-group">
         <label><i class="fas fa-image"></i> Upload Thumbnail Image:</label>
         <div class="file-input-wrapper">
@@ -251,13 +293,12 @@
           
           <div class="image-preview-container" id="imagePreviewBox">
             <img id="imagePreview" src="" alt="Selected Preview" />
-            <button type="button" class="remove-img-btn" id="removeImgBtn" title="Remove">&times;</button>
+            <button type="button" class="remove-img-btn" id="removeImgBtn">&times;</button>
           </div>
         </div>
         <input type="text" id="postThumbnailUrl" placeholder="Or paste image URL (https://...)" style="margin-top:8px;" />
       </div>
 
-      <!-- HTML File Upload Section -->
       <div class="form-group">
         <label><i class="fas fa-code"></i> Upload HTML Code File (.html or .txt):</label>
         <div class="file-input-wrapper">
@@ -275,15 +316,15 @@
 
       <div class="form-group">
         <label>Full HTML Code (Runs in fullscreen bot mode):</label>
-        <textarea id="postHtmlContent" placeholder="If you uploaded an HTML file, the code will appear here automatically. You can also paste raw HTML code directly..."></textarea>
+        <textarea id="postHtmlContent" placeholder="If you uploaded an HTML file, the code will appear here automatically..."></textarea>
       </div>
 
-      <button class="btn-publish" id="publishBtn">
+      <button class="btn-action" id="publishBtn">
         <i class="fas fa-paper-plane"></i> <span id="publishBtnText">Publish Post</span>
       </button>
     </div>
 
-    <!-- Manage & Delete Posts / Bots Table -->
+    <!-- Manage Posts -->
     <div class="table-card">
       <h2><i class="fas fa-tasks"></i> Manage Published Posts & Bots</h2>
       <table>
@@ -302,12 +343,9 @@
       </table>
     </div>
 
-    <!-- Registered Users Management Table -->
+    <!-- User List -->
     <div class="table-card">
       <h2><i class="fas fa-user-shield"></i> Registered Users Directory</h2>
-      <p style="font-size:12px; color:#94a3b8; margin-bottom:12px;">
-        * For security reasons, plain passwords are encrypted by Google. You can view user Gmail addresses and send password reset links below.
-      </p>
       <table>
         <thead>
           <tr>
@@ -328,7 +366,7 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
     import { 
-      getFirestore, collection, addDoc, getDocs, query, serverTimestamp, where, Timestamp, doc, deleteDoc 
+      getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, query, serverTimestamp, where, Timestamp, deleteDoc, onSnapshot, orderBy 
     } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
     import { 
       getStorage, ref, uploadBytes, getDownloadURL 
@@ -351,10 +389,149 @@
     const storage = getStorage(app);
     const auth = getAuth(app);
 
+    // ========================================================
+    // ⚠️ আপনার অ্যাডমিন সিক্রেট কি (Secret Key) এখানে দেওয়া আছে:
+    // আপনি চাইলে এটি পরিবর্তন করতে পারেন
+    // ========================================================
+    const ADMIN_SECRET_KEY = "FORID786"; 
+
+    // 1. Session Check (লক স্ক্রিন হ্যান্ডলার)
+    function checkAdminSession() {
+      if (sessionStorage.getItem("admin_session_auth") === "yes") {
+        document.getElementById("adminAuthGate").style.display = "none";
+        document.getElementById("adminPanelArea").style.display = "block";
+        loadAdminData();
+        loadRealtimeKeys();
+      } else {
+        document.getElementById("adminAuthGate").style.display = "block";
+        document.getElementById("adminPanelArea").style.display = "none";
+      }
+    }
+    checkAdminSession();
+
+    document.getElementById("btnAdminUnlock").onclick = () => {
+      const key = document.getElementById("adminSecretKeyInput").value.trim();
+      if (key === ADMIN_SECRET_KEY) {
+        sessionStorage.setItem("admin_session_auth", "yes");
+        document.getElementById("adminAuthGate").style.display = "none";
+        document.getElementById("adminPanelArea").style.display = "block";
+        loadAdminData();
+        loadRealtimeKeys();
+      } else {
+        alert("❌ ভুল সিক্রেট কি! সঠিক কি দিয়ে চেষ্টা করুন।");
+      }
+    };
+
+    document.getElementById("adminSecretKeyInput").addEventListener("keypress", (e) => {
+      if (e.key === "Enter") document.getElementById("btnAdminUnlock").click();
+    });
+
+    document.getElementById("btnLockAdmin").onclick = () => {
+      sessionStorage.removeItem("admin_session_auth");
+      document.getElementById("adminSecretKeyInput").value = "";
+      document.getElementById("adminAuthGate").style.display = "block";
+      document.getElementById("adminPanelArea").style.display = "none";
+    };
+
+    // ========================================================
+    // 2. ৬ ডিজিটের অ্যাক্টিভেশন কি জেনারেটর
+    // ========================================================
+    document.getElementById("btnGenerateKey").onclick = async () => {
+      const days = parseInt(document.getElementById("keyDurationDays").value);
+      if (!days || days <= 0) return alert("সঠিক দিন সংখ্যা লিখুন।");
+
+      const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+      try {
+        await addDoc(collection(db, "activation_keys"), {
+          code: randomCode,
+          durationDays: days,
+          isUsed: false,
+          createdAt: serverTimestamp()
+        });
+        alert(`সফলভাবে ৬ ডিজিটের কি তৈরি হয়েছে: ${randomCode} (${days} দিনের মেয়াদ)`);
+      } catch(e) {
+        alert("Key Generate Error: " + e.message);
+      }
+    };
+
+    function loadRealtimeKeys() {
+      const tbody = document.getElementById("keysTableBody");
+      const q = query(collection(db, "activation_keys"), orderBy("createdAt", "desc"));
+      
+      onSnapshot(q, (snapshot) => {
+        tbody.innerHTML = "";
+        let activeKeysCount = 0;
+
+        if (snapshot.empty) {
+          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#94a3b8;">কোনো কি তৈরি করা হয়নি।</td></tr>`;
+          document.getElementById("totalKeysCount").innerText = 0;
+          return;
+        }
+
+        snapshot.forEach(docSnap => {
+          const k = docSnap.data();
+          if (!k.isUsed) activeKeysCount++;
+
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td><b style="color:#38bdf8; font-size:15px; letter-spacing:1px;">${k.code}</b></td>
+            <td>${k.durationDays} Days</td>
+            <td>${k.isUsed ? `<span class="status-used">Used (${k.usedBy ? k.usedBy.split('@')[0] : 'User'})</span>` : `<span class="status-active">Active</span>`}</td>
+            <td>
+              <button class="btn-copy" onclick="copyKey('${k.code}')"><i class="fas fa-copy"></i> Copy</button>
+              <button class="btn-delete" style="padding:5px 10px; margin-left:5px;" onclick="deleteKey('${docSnap.id}')"><i class="fas fa-trash"></i></button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        document.getElementById("totalKeysCount").innerText = activeKeysCount;
+      });
+    }
+
+    window.copyKey = (code) => {
+      navigator.clipboard.writeText(code);
+      alert("Key Copied: " + code);
+    };
+
+    window.deleteKey = async (id) => {
+      if (confirm("Are you sure you want to delete this Key?")) {
+        try {
+          await deleteDoc(doc(db, "activation_keys", id));
+        } catch(e) { alert("Delete error: " + e.message); }
+      }
+    };
+
+    // ========================================================
+    // 3. সাইট নেম ও সেটিংস সেভ করা
+    // ========================================================
+    document.getElementById("saveSettingsBtn").onclick = async () => {
+      const siteName = document.getElementById("settingSiteName").value.trim();
+      const logoUrl = document.getElementById("settingLogoUrl").value.trim();
+
+      if (!siteName) return alert("Please enter a website name.");
+
+      try {
+        await setDoc(doc(db, "settings", "general"), {
+          siteName: siteName,
+          logoUrl: logoUrl,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+
+        alert("Website Name and Logo updated successfully! Reloading...");
+        location.reload();
+      } catch(e) {
+        alert("Failed to update settings: " + e.message);
+      }
+    };
+
+    // ========================================================
+    // 4. ইমেজ ও HTML ফাইল আপলোড
+    // ========================================================
     let selectedImageFile = null;
     let hasHtmlFile = false;
 
-    // 1. Image Preview
     const imageInput = document.getElementById("postImageFileInput");
     const previewBox = document.getElementById("imagePreviewBox");
     const previewImg = document.getElementById("imagePreview");
@@ -365,7 +542,7 @@
       if (file) {
         selectedImageFile = file;
         const reader = new FileReader();
-        reader.onload = function(evt) {
+        reader.onload = (evt) => {
           previewImg.src = evt.target.result;
           previewBox.style.display = "block";
         };
@@ -373,19 +550,18 @@
       }
     });
 
-    removeImgBtn.addEventListener("click", function() {
+    removeImgBtn.addEventListener("click", () => {
       selectedImageFile = null;
       imageInput.value = "";
       previewBox.style.display = "none";
       previewImg.src = "";
     });
 
-    // 2. HTML File Reader
     document.getElementById("htmlFileInput").addEventListener("change", function(e) {
       const file = e.target.files[0];
       if (file) {
         const reader = new FileReader();
-        reader.onload = function(evt) {
+        reader.onload = (evt) => {
           document.getElementById("postHtmlContent").value = evt.target.result;
           hasHtmlFile = true;
         };
@@ -393,7 +569,9 @@
       }
     });
 
-    // 3. Publish Action
+    // ========================================================
+    // 5. পোস্ট পাবলিশ
+    // ========================================================
     document.getElementById("publishBtn").onclick = async () => {
       const title = document.getElementById("postTitle").value.trim();
       const description = document.getElementById("postDescription").value.trim();
@@ -439,10 +617,8 @@
       }
     };
 
-    // 4. Delete Post Function
     window.deletePost = async (id, title) => {
-      const confirmDelete = confirm(`Are you sure you want to delete this item:\n"${title}"?`);
-      if (confirmDelete) {
+      if (confirm(`Are you sure you want to delete "${title}"?`)) {
         try {
           await deleteDoc(doc(db, "posts", id));
           alert("Item deleted successfully!");
@@ -453,21 +629,37 @@
       }
     };
 
-    // 5. Send Password Reset Email Function
     window.sendResetEmail = async (email) => {
-      if (confirm(`Send password reset email to:\n${email}?`)) {
+      if (confirm(`Send password reset link to: ${email}?`)) {
         try {
           await sendPasswordResetEmail(auth, email);
-          alert(`Password reset link sent to ${email} successfully!`);
+          alert(`Password reset link sent to ${email}!`);
         } catch(err) {
-          alert("Error sending reset email: " + err.message);
+          alert("Error: " + err.message);
         }
       }
     };
 
-    // 6. Load Analytics, Posts & Users
+    // ========================================================
+    // 6. পোস্ট ও অ্যানালিটিক্স ডেটা লোড
+    // ========================================================
     async function loadAdminData() {
-      // 6.1 Load Posts Table
+      // সেটিংস লোড
+      try {
+        const settingsDoc = await getDoc(doc(db, "settings", "general"));
+        if (settingsDoc.exists()) {
+          const s = settingsDoc.data();
+          if (s.siteName) {
+            document.getElementById("settingSiteName").value = s.siteName;
+            document.getElementById("adminPanelHeaderName").innerText = s.siteName + " Admin Panel";
+          }
+          if (s.logoUrl) {
+            document.getElementById("settingLogoUrl").value = s.logoUrl;
+          }
+        }
+      } catch(e) {}
+
+      // পোস্ট টেবিল লোড
       const postsTable = document.getElementById("postsTableBody");
       try {
         const postsSnap = await getDocs(collection(db, "posts"));
@@ -475,7 +667,7 @@
         postsTable.innerHTML = "";
 
         if (postsSnap.empty) {
-          postsTable.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8;">No posts or bots uploaded yet.</td></tr>`;
+          postsTable.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8;">No posts uploaded yet.</td></tr>`;
         } else {
           postsSnap.forEach(documentItem => {
             const p = documentItem.data();
@@ -499,36 +691,36 @@
             postsTable.appendChild(tr);
           });
         }
-      } catch(e) {
-        postsTable.innerHTML = `<tr><td colspan="5" style="color:#ef4444;">Failed to load posts: ${e.message}</td></tr>`;
-      }
+      } catch(e) {}
 
-      // 6.2 Load Registered Users Table
-      const usersSnap = await getDocs(collection(db, "users"));
-      document.getElementById("totalUsersCount").innerText = usersSnap.size;
+      // ইউজার টেবিল লোড
+      try {
+        const usersSnap = await getDocs(collection(db, "users"));
+        document.getElementById("totalUsersCount").innerText = usersSnap.size;
 
-      const userTable = document.getElementById("userTableBody");
-      userTable.innerHTML = "";
-      if (usersSnap.empty) {
-        userTable.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#94a3b8;">No registered users yet.</td></tr>`;
-      } else {
-        usersSnap.forEach(uDoc => {
-          const u = uDoc.data();
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><i class="fas fa-envelope" style="color:#38bdf8; margin-right:6px;"></i> <b>${u.email}</b></td>
-            <td>${u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString() : 'N/A'}</td>
-            <td>
-              <button class="btn-reset" onclick="sendResetEmail('${u.email}')">
-                <i class="fas fa-key"></i> Send Reset Link
-              </button>
-            </td>
-          `;
-          userTable.appendChild(tr);
-        });
-      }
+        const userTable = document.getElementById("userTableBody");
+        userTable.innerHTML = "";
+        if (usersSnap.empty) {
+          userTable.innerHTML = `<tr><td colspan="3" style="text-align:center; color:#94a3b8;">No registered users yet.</td></tr>`;
+        } else {
+          usersSnap.forEach(uDoc => {
+            const u = uDoc.data();
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+              <td><i class="fas fa-envelope" style="color:#38bdf8; margin-right:6px;"></i> <b>${u.email}</b></td>
+              <td>${u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString() : 'N/A'}</td>
+              <td>
+                <button class="btn-reset" onclick="sendResetEmail('${u.email}')">
+                  <i class="fas fa-key"></i> Send Reset Link
+                </button>
+              </td>
+            `;
+            userTable.appendChild(tr);
+          });
+        }
+      } catch(e) {}
 
-      // 6.3 Past 24 Hours Visitors
+      // ভিজিটর সংখ্যা
       try {
         const past24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000);
         const q = query(collection(db, "analytics"), where("timestamp", ">=", Timestamp.fromDate(past24Hours)));
@@ -536,8 +728,6 @@
         document.getElementById("recentVisitorsCount").innerText = analyticsSnap.size;
       } catch(e) {}
     }
-
-    loadAdminData();
   </script>
 </body>
 </html>
