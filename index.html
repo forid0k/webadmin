@@ -69,7 +69,7 @@
       color: #fff;
       font-family: inherit;
     }
-    textarea { min-height: 100px; }
+    textarea { min-height: 95px; }
 
     /* Buttons */
     .btn-action {
@@ -137,12 +137,14 @@
     th { color: #38bdf8; background: #0f172a; }
     .table-thumb { width: 55px; height: 40px; border-radius: 4px; object-fit: cover; }
     
+    .btn-edit { background: #f59e0b; color: #000; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 12px; }
+    .btn-edit:hover { background: #d97706; }
     .btn-delete { background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 12px; }
     .btn-delete:hover { background: #dc2626; }
     .btn-reset { background: #0284c7; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
     .btn-copy { background: #334155; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
 
-    /* VIP & Status Badges */
+    /* VIP & Badges */
     .badge-vip {
       background: #78350f;
       color: #f59e0b;
@@ -174,50 +176,14 @@
       font-size: 11px;
     }
 
-    /* VIP Action Buttons */
-    .btn-vip-on {
-      background: #f59e0b;
-      color: #000;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 4px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 11px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .btn-vip-on:hover { background: #d97706; }
-
-    .btn-vip-off {
-      background: #475569;
-      color: #fff;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 4px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 11px;
-    }
-    .btn-vip-off:hover { background: #334155; }
-
-    .btn-extend-days {
-      background: #10b981;
-      color: #fff;
-      border: none;
-      padding: 6px 10px;
-      border-radius: 4px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 11px;
-    }
-    .btn-extend-days:hover { background: #059669; }
+    .btn-vip-on { background: #f59e0b; color: #000; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 11px; }
+    .btn-vip-off { background: #475569; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
+    .btn-extend-days { background: #10b981; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
 
     .status-active { color: #10b981; font-weight: bold; }
     .status-used { color: #ef4444; }
 
-    /* Admin Secret Key Gate */
+    /* Lock Screen */
     #adminAuthGate {
       max-width: 420px;
       margin: 80px auto;
@@ -244,7 +210,7 @@
   <div id="adminAuthGate">
     <div style="font-size: 44px; color:#f59e0b; margin-bottom: 15px;"><i class="fas fa-user-shield"></i></div>
     <h2 style="color:#fff; margin-bottom:8px; font-size: 20px;">Admin Access Gate</h2>
-    <p style="font-size:13px; color:#94a3b8; margin-bottom:20px;">অ্যাডমিন প্যানেল আনলক করতে আপনার সিক্রেট কি (Secret Key) দিন।</p>
+    <p style="font-size:13px; color:#94a3b8; margin-bottom:20px;">অ্যাডমিন প্যানেল আনলক করতে সিক্রেট কি দিন।</p>
     
     <input type="password" id="adminSecretKeyInput" class="key-lock-input" placeholder="Enter Secret Key..." autocomplete="off" />
     <button class="btn-action" id="btnAdminUnlock" style="width:100%; justify-content:center; background:#10b981;">
@@ -302,20 +268,41 @@
       </div>
     </div>
 
-    <!-- User Management Table (VIP & Access Control) -->
+    <!-- Website Ads Management Card (অ্যাড সেকশন) -->
+    <div class="upload-card" style="border-left: 5px solid #ec4899;">
+      <h2><i class="fas fa-ad"></i> Website Ads Management (বিজ্ঞাপন নিয়ন্ত্রণ)</h2>
+      <p style="font-size:12.5px; color:#94a3b8; margin-bottom:15px;">
+        এখানে AdSense বা অন্য নেটওয়ার্কের অ্যাড স্ক্রিপ্ট কোড বসিয়ে সেভ করুন।
+      </p>
+
+      <div class="form-group">
+        <label><i class="fas fa-code"></i> Header Ad Script / Banner HTML:</label>
+        <textarea id="adHeaderCode" placeholder="<script>...</script> or <ins class='adsbygoogle' ...></ins>"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-code"></i> In-Content / Bot Page Ad Code:</label>
+        <textarea id="adContentCode" placeholder="Paste your banner or in-article ad script here..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label><i class="fas fa-code"></i> Footer / Floating Ad Script:</label>
+        <textarea id="adFooterCode" placeholder="Paste footer or floating banner script here..."></textarea>
+      </div>
+
+      <button class="btn-action" id="saveAdsBtn" style="background:#ec4899;">
+        <i class="fas fa-save"></i> Save Ad Codes
+      </button>
+    </div>
+
+    <!-- User Management Table -->
     <div class="table-card" style="border-left: 5px solid #f59e0b;">
       <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
         <h2 style="margin-bottom:0;"><i class="fas fa-users-cog"></i> User Access & VIP Management</h2>
-        
-        <!-- Search Users Input -->
         <div style="width:280px;">
           <input type="text" id="userSearchInput" placeholder="Search user by email or name..." style="padding:8px 12px; font-size:13px;" />
         </div>
       </div>
-
-      <p style="font-size:12.5px; color:#94a3b8; margin-bottom:12px;">
-        ইউজারকে <b>Make VIP</b> করে দিলে সে আজীবন কোনো কি (Key) ছাড়াই আনলিমিটেড বট চালাতে পারবে। ফ্রি ইউজারদের মেয়াদ বাড়াতে <b>+30 Days</b> চাপুন।
-      </p>
 
       <div style="overflow-x:auto;">
         <table>
@@ -338,8 +325,6 @@
     <!-- 6-Digit Activation Key Generator Section -->
     <div class="upload-card" style="border-left: 5px solid #10b981;">
       <h2><i class="fas fa-key"></i> 6-Digit Key Generator (ফ্রি ইউজারদের কোড)</h2>
-      <p style="font-size:13px; color:#94a3b8; margin-bottom:15px;">যেসব ফ্রি ইউজারদের ৩ দিনের ট্রায়াল শেষ, তাদেরকে দেওয়ার জন্য ৬ সংখ্যার কোড তৈরি করুন।</p>
-
       <div style="display:flex; flex-wrap:wrap; gap:15px; align-items:flex-end;">
         <div class="form-group" style="flex:1; min-width:220px; margin-bottom:0;">
           <label>মেয়াদ (কত দিন চলবে):</label>
@@ -367,29 +352,27 @@
       </div>
     </div>
 
-    <!-- Website Settings Card (Change Site Name & Logo) -->
+    <!-- Website Settings Card -->
     <div class="upload-card" style="border-left: 5px solid #38bdf8;">
       <h2><i class="fas fa-sliders-h"></i> Website Settings (Change Site Name & Logo)</h2>
-      
       <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
         <div class="form-group">
           <label>Website Name:</label>
-          <input type="text" id="settingSiteName" placeholder="e.g. tradewithforid, ForidTradeX, etc." />
+          <input type="text" id="settingSiteName" placeholder="e.g. tradewithforid" />
         </div>
         <div class="form-group">
           <label>Website Logo URL:</label>
           <input type="text" id="settingLogoUrl" placeholder="Image URL (https://...)" />
         </div>
       </div>
-
       <button class="btn-action" id="saveSettingsBtn" style="background:#0284c7;">
         <i class="fas fa-save"></i> Save Site Settings
       </button>
     </div>
 
-    <!-- Publish Form -->
-    <div class="upload-card">
-      <h2><i class="fas fa-upload"></i> Publish New Bot / Post</h2>
+    <!-- Publish & Edit Bot Form -->
+    <div class="upload-card" id="botFormCard">
+      <h2><i class="fas fa-robot"></i> <span id="formHeaderTitle">Publish New Bot / Post</span></h2>
 
       <div class="form-group">
         <label>Post / Bot Title:</label>
@@ -403,7 +386,6 @@
             <i class="fas fa-folder-open"></i> Select Image from Device
           </label>
           <input type="file" id="postImageFileInput" accept="image/*" />
-          
           <div class="image-preview-container" id="imagePreviewBox">
             <img id="imagePreview" src="" alt="Selected Preview" />
             <button type="button" class="remove-img-btn" id="removeImgBtn">&times;</button>
@@ -429,15 +411,20 @@
 
       <div class="form-group">
         <label>Full HTML Code (Runs in fullscreen bot mode):</label>
-        <textarea id="postHtmlContent" placeholder="If you uploaded an HTML file, the code will appear here automatically..."></textarea>
+        <textarea id="postHtmlContent" placeholder="Paste full HTML bot code here or upload .html file..."></textarea>
       </div>
 
-      <button class="btn-action" id="publishBtn">
-        <i class="fas fa-paper-plane"></i> <span id="publishBtnText">Publish Post</span>
-      </button>
+      <div style="display:flex; gap:10px; align-items:center;">
+        <button class="btn-action" id="publishBtn">
+          <i class="fas fa-paper-plane"></i> <span id="publishBtnText">Publish Post</span>
+        </button>
+        <button type="button" class="btn-action" id="cancelEditBtn" style="background:#64748b; display:none;">
+          <i class="fas fa-times"></i> Cancel Edit
+        </button>
+      </div>
     </div>
 
-    <!-- Manage Posts -->
+    <!-- Manage Posts Table -->
     <div class="table-card">
       <h2><i class="fas fa-tasks"></i> Manage Published Posts & Bots</h2>
       <table>
@@ -464,12 +451,8 @@
     import { 
       getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, query, serverTimestamp, where, Timestamp, deleteDoc, onSnapshot, orderBy 
     } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
-    import { 
-      getStorage, ref, uploadBytes, getDownloadURL 
-    } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
-    import { 
-      getAuth, sendPasswordResetEmail 
-    } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
+    import { getAuth, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyBDMrAFCAdgNniHDffFcq96WLA8S6I_EUI",
@@ -486,10 +469,10 @@
     const auth = getAuth(app);
 
     const ADMIN_SECRET_KEY = "forid23"; 
-
     let cachedUsers = [];
+    let editingPostId = null; // ট্র্যাক করবে কোনো বট এডিট হচ্ছে কি না
 
-    // 1. Session Check (লক স্ক্রিন হ্যান্ডলার)
+    // 1. Session Lock Check
     function checkAdminSession() {
       if (sessionStorage.getItem("admin_session_auth") === "yes") {
         document.getElementById("adminAuthGate").style.display = "none";
@@ -528,7 +511,29 @@
     };
 
     // ========================================================
-    // 2. ৬ ডিজিটের অ্যাক্টিভেশন কি জেনারেটর
+    // 2. Ads Management সেভ করা
+    // ========================================================
+    document.getElementById("saveAdsBtn").onclick = async () => {
+      const headerCode = document.getElementById("adHeaderCode").value;
+      const contentCode = document.getElementById("adContentCode").value;
+      const footerCode = document.getElementById("adFooterCode").value;
+
+      try {
+        await setDoc(doc(db, "settings", "ads"), {
+          headerAd: headerCode,
+          contentAd: contentCode,
+          footerAd: footerCode,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+
+        alert("বিজ্ঞাপনের কোডগুলো সফলভাবে সেভ হয়েছে!");
+      } catch(e) {
+        alert("অ্যাড সেভ করতে সমস্যা হয়েছে: " + e.message);
+      }
+    };
+
+    // ========================================================
+    // 3. ৬ ডিজিটের অ্যাক্টিভেশন কি জেনারেটর
     // ========================================================
     document.getElementById("btnGenerateKey").onclick = async () => {
       const days = parseInt(document.getElementById("keyDurationDays").value);
@@ -571,7 +576,7 @@
           tr.innerHTML = `
             <td><b style="color:#38bdf8; font-size:15px; letter-spacing:1px;">${k.code}</b></td>
             <td>${k.durationDays} Days</td>
-            <td>${k.isUsed ? `<span class="status-used">Used (${k.usedBy ? k.usedBy.split('@')[0] : 'User'})</span>` : `<span class="status-active">Active</span>`}</td>
+            <td>${k.isUsed ? `<span class="status-used">Used</span>` : `<span class="status-active">Active</span>`}</td>
             <td>
               <button class="btn-copy" onclick="copyKey('${k.code}')"><i class="fas fa-copy"></i> Copy</button>
               <button class="btn-delete" style="padding:5px 10px; margin-left:5px;" onclick="deleteKey('${docSnap.id}')"><i class="fas fa-trash"></i></button>
@@ -598,12 +603,11 @@
     };
 
     // ========================================================
-    // 3. সাইট নেম ও সেটিংস সেভ করা
+    // 4. সাইট সেটিংস সেভ
     // ========================================================
     document.getElementById("saveSettingsBtn").onclick = async () => {
       const siteName = document.getElementById("settingSiteName").value.trim();
       const logoUrl = document.getElementById("settingLogoUrl").value.trim();
-
       if (!siteName) return alert("Please enter a website name.");
 
       try {
@@ -613,15 +617,15 @@
           updatedAt: serverTimestamp()
         }, { merge: true });
 
-        alert("Website Name and Logo updated successfully! Reloading...");
+        alert("Website Settings updated!");
         location.reload();
       } catch(e) {
-        alert("Failed to update settings: " + e.message);
+        alert("Failed to update: " + e.message);
       }
     };
 
     // ========================================================
-    // 4. ইমেজ ও HTML ফাইল আপলোড
+    // 5. ইমেজ ও HTML ফাইল হ্যান্ডলিং
     // ========================================================
     let selectedImageFile = null;
     let hasHtmlFile = false;
@@ -664,8 +668,56 @@
     });
 
     // ========================================================
-    // 5. পোস্ট পাবলিশ
+    // 6. বট / পোস্ট এডিট (Edit Mode) ফাংশন
     // ========================================================
+    window.startEditPost = async (id) => {
+      try {
+        const docSnap = await getDoc(doc(db, "posts", id));
+        if (!docSnap.exists()) return alert("বট বা পোস্টটি পাওয়া যায়নি!");
+
+        const data = docSnap.data();
+        editingPostId = id;
+
+        // ফর্মের ফিল্ডে ডাটা আনা
+        document.getElementById("postTitle").value = data.title || "";
+        document.getElementById("postDescription").value = data.description || "";
+        document.getElementById("postHtmlContent").value = data.htmlContent || "";
+        document.getElementById("postThumbnailUrl").value = data.thumbnail || "";
+
+        // UI চেঞ্জ
+        document.getElementById("formHeaderTitle").innerText = "Edit Bot / Post";
+        document.getElementById("publishBtnText").innerText = "Update Bot / Post";
+        document.getElementById("cancelEditBtn").style.display = "inline-flex";
+
+        // ফর্মে স্ক্রল করা
+        document.getElementById("botFormCard").scrollIntoView({ behavior: "smooth" });
+      } catch (err) {
+        alert("Error loading post: " + err.message);
+      }
+    };
+
+    document.getElementById("cancelEditBtn").onclick = () => {
+      resetPublishForm();
+    };
+
+    function resetPublishForm() {
+      editingPostId = null;
+      document.getElementById("postTitle").value = "";
+      document.getElementById("postDescription").value = "";
+      document.getElementById("postHtmlContent").value = "";
+      document.getElementById("postThumbnailUrl").value = "";
+      selectedImageFile = null;
+      hasHtmlFile = false;
+      imageInput.value = "";
+      document.getElementById("htmlFileInput").value = "";
+      previewBox.style.display = "none";
+      previewImg.src = "";
+      document.getElementById("formHeaderTitle").innerText = "Publish New Bot / Post";
+      document.getElementById("publishBtnText").innerText = "Publish Post";
+      document.getElementById("cancelEditBtn").style.display = "none";
+    }
+
+    // Publish ও Update হ্যান্ডলার
     document.getElementById("publishBtn").onclick = async () => {
       const title = document.getElementById("postTitle").value.trim();
       const description = document.getElementById("postDescription").value.trim();
@@ -679,7 +731,7 @@
 
       try {
         publishBtn.disabled = true;
-        publishBtnText.innerText = "Publishing post...";
+        publishBtnText.innerText = editingPostId ? "Updating..." : "Publishing...";
 
         if (selectedImageFile) {
           try {
@@ -691,23 +743,39 @@
           }
         }
 
-        await addDoc(collection(db, "posts"), {
+        const postData = {
           title: title,
-          thumbnail: thumbnailUrl || "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop",
           description: description,
           htmlContent: htmlContent,
           isHtml: hasHtmlFile || (htmlContent.length > 0),
           category: hasHtmlFile || (htmlContent.length > 0) ? "Bot" : "Post",
-          createdAt: serverTimestamp()
-        });
+          updatedAt: serverTimestamp()
+        };
 
-        alert("Post published successfully!");
-        location.reload();
+        if (thumbnailUrl) {
+          postData.thumbnail = thumbnailUrl;
+        }
+
+        if (editingPostId) {
+          // ১. এডিট সম্পন্ন করা
+          await updateDoc(doc(db, "posts", editingPostId), postData);
+          alert("✅ বট সফলভাবে আপডেট করা হয়েছে!");
+        } else {
+          // ২. নতুন পাবলিশ করা
+          postData.createdAt = serverTimestamp();
+          if (!thumbnailUrl) {
+            postData.thumbnail = "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop";
+          }
+          await addDoc(collection(db, "posts"), postData);
+          alert("✅ নতুন বট সফলভাবে পাবলিশ হয়েছে!");
+        }
+
+        resetPublishForm();
+        loadAdminData();
       } catch(e) {
-        alert("Failed to publish: " + e.message);
+        alert("Failed to save: " + e.message);
       } finally {
         publishBtn.disabled = false;
-        publishBtnText.innerText = "Publish Post";
       }
     };
 
@@ -718,7 +786,7 @@
           alert("Item deleted successfully!");
           loadAdminData();
         } catch(err) {
-          alert("Error deleting item: " + err.message);
+          alert("Error: " + err.message);
         }
       }
     };
@@ -728,66 +796,52 @@
         try {
           await sendPasswordResetEmail(auth, email);
           alert(`Password reset link sent to ${email}!`);
-        } catch(err) {
-          alert("Error: " + err.message);
-        }
+        } catch(err) { alert("Error: " + err.message); }
       }
     };
 
     // ========================================================
-    // 6. ইউজার VIP ও এক্সেস কন্ট্রোল ফাংশনস
+    // 7. ইউজার অ্যাক্সেস ও ভিআইপি নিয়ন্ত্রণ
     // ========================================================
     window.toggleUserVip = async (uid, currentVipStatus) => {
       const newStatus = !currentVipStatus;
       const msg = newStatus 
-        ? "এই ইউজারকে VIP একটিভ করতে চান? (সে কোনো কোড ছাড়াই সারাজীবন আনলিমিটেড চালাতে পারবে)" 
+        ? "এই ইউজারকে VIP করতে চান? (সে কোনো কোড ছাড়াই আনলিমিটেড চালাতে পারবে)" 
         : "এই ইউজারের VIP বাতিল করতে চান?";
 
       if (confirm(msg)) {
         try {
-          await updateDoc(doc(db, "users", uid), {
-            isVip: newStatus
-          });
-          alert(newStatus ? "User is now VIP Member!" : "User VIP status removed.");
+          await updateDoc(doc(db, "users", uid), { isVip: newStatus });
+          alert(newStatus ? "User is now VIP Member!" : "VIP status removed.");
           loadAdminData();
-        } catch(err) {
-          alert("Failed to update VIP status: " + err.message);
-        }
+        } catch(err) { alert("Failed: " + err.message); }
       }
     };
 
     window.extendUserDays = async (uid, currentExpiry, daysToAdd) => {
-      if (confirm(`এই ইউজারের এক্সেস মেয়াদ আরও ${daysToAdd} দিন বাড়াতে চান?`)) {
+      if (confirm(`এক্সেস মেয়াদ আরও ${daysToAdd} দিন বাড়াতে চান?`)) {
         try {
           const now = Date.now();
           const baseTime = (currentExpiry && currentExpiry > now) ? currentExpiry : now;
           const newExpiry = baseTime + (daysToAdd * 24 * 60 * 60 * 1000);
 
-          await updateDoc(doc(db, "users", uid), {
-            accessExpiresAt: newExpiry
-          });
-
+          await updateDoc(doc(db, "users", uid), { accessExpiresAt: newExpiry });
           alert(`এক্সেস মেয়াদ ${daysToAdd} দিন বাড়ানো হয়েছে!`);
           loadAdminData();
-        } catch(err) {
-          alert("Failed to extend days: " + err.message);
-        }
+        } catch(err) { alert("Failed: " + err.message); }
       }
     };
 
     window.deleteUserRecord = async (uid, email) => {
-      if (confirm(`Are you sure you want to delete user ${email} from the database?`)) {
+      if (confirm(`Are you sure you want to delete user ${email}?`)) {
         try {
           await deleteDoc(doc(db, "users", uid));
-          alert("User record deleted successfully!");
+          alert("User record deleted!");
           loadAdminData();
-        } catch(err) {
-          alert("Error: " + err.message);
-        }
+        } catch(err) { alert("Error: " + err.message); }
       }
     };
 
-    // ইউজার সার্চ অপশন
     document.getElementById("userSearchInput").addEventListener("input", (e) => {
       const q = e.target.value.toLowerCase().trim();
       const filtered = cachedUsers.filter(u => 
@@ -811,16 +865,15 @@
         const now = Date.now();
         const hasValidTrial = u.accessExpiresAt && u.accessExpiresAt > now;
 
-        // স্ট্যাটাস ব্যাজ নির্বাচন
         let badgeHtml = '';
         let expiryHtml = '';
 
         if (isVip) {
           badgeHtml = `<span class="badge-vip"><i class="fas fa-crown"></i> VIP Member</span>`;
-          expiryHtml = `<b style="color:#f59e0b;">Unlimited (Lifetime)</b>`;
+          expiryHtml = `<b style="color:#f59e0b;">Unlimited</b>`;
         } else if (hasValidTrial) {
           const daysLeft = Math.ceil((u.accessExpiresAt - now) / (1000 * 60 * 60 * 24));
-          badgeHtml = `<span class="badge-free">Active Free Trial (${daysLeft}d left)</span>`;
+          badgeHtml = `<span class="badge-free">Active (${daysLeft}d left)</span>`;
           expiryHtml = new Date(u.accessExpiresAt).toLocaleDateString();
         } else {
           badgeHtml = `<span class="badge-expired">Trial Expired</span>`;
@@ -831,26 +884,20 @@
         tr.innerHTML = `
           <td>
             <b>${u.name || u.email.split('@')[0]}</b><br/>
-            <span style="font-size:11.5px; color:#94a3b8;"><i class="fas fa-envelope"></i> ${u.email}</span>
+            <span style="font-size:11.5px; color:#94a3b8;">${u.email}</span>
           </td>
           <td>${badgeHtml}</td>
           <td>${expiryHtml}</td>
           <td>
             ${isVip 
-              ? `<button class="btn-vip-off" onclick="toggleUserVip('${u.id}', true)"><i class="fas fa-times-circle"></i> Remove VIP</button>` 
+              ? `<button class="btn-vip-off" onclick="toggleUserVip('${u.id}', true)">Remove VIP</button>` 
               : `<button class="btn-vip-on" onclick="toggleUserVip('${u.id}', false)"><i class="fas fa-crown"></i> Make VIP</button>`
             }
-            <button class="btn-extend-days" style="margin-left:4px;" onclick="extendUserDays('${u.id}', ${u.accessExpiresAt || 0}, 30)">
-              +30 Days
-            </button>
+            <button class="btn-extend-days" style="margin-left:4px;" onclick="extendUserDays('${u.id}', ${u.accessExpiresAt || 0}, 30)">+30 Days</button>
           </td>
           <td>
-            <button class="btn-reset" onclick="sendResetEmail('${u.email}')" title="Send Password Reset Link">
-              <i class="fas fa-key"></i> Reset
-            </button>
-            <button class="btn-delete" style="padding:5px 8px; margin-left:3px;" onclick="deleteUserRecord('${u.id}', '${u.email}')" title="Delete User">
-              <i class="fas fa-trash"></i>
-            </button>
+            <button class="btn-reset" onclick="sendResetEmail('${u.email}')"><i class="fas fa-key"></i></button>
+            <button class="btn-delete" style="padding:5px 8px; margin-left:3px;" onclick="deleteUserRecord('${u.id}', '${u.email}')"><i class="fas fa-trash"></i></button>
           </td>
         `;
         userTable.appendChild(tr);
@@ -858,10 +905,10 @@
     }
 
     // ========================================================
-    // 7. পোস্ট ও অ্যানালিটিক্স ডেটা লোড
+    // 8. ডাটা ও অ্যানালিটিক্স লোডিং
     // ========================================================
     async function loadAdminData() {
-      // Settings Load
+      // সেটিংস ও অ্যাড ডাটা লোড
       try {
         const settingsDoc = await getDoc(doc(db, "settings", "general"));
         if (settingsDoc.exists()) {
@@ -870,17 +917,25 @@
             document.getElementById("settingSiteName").value = s.siteName;
             document.getElementById("adminPanelHeaderName").innerText = s.siteName + " Admin Panel";
           }
-          if (s.logoUrl) {
-            document.getElementById("settingLogoUrl").value = s.logoUrl;
-          }
+          if (s.logoUrl) document.getElementById("settingLogoUrl").value = s.logoUrl;
         }
-      } catch(e) {}
 
-      // Posts Table Load
-      const postsTable = document.getElementById("postsTableBody");
+        const adsDoc = await getDoc(doc(db, "settings", "ads"));
+        if (adsDoc.exists()) {
+          const a = adsDoc.data();
+          if (a.headerAd) document.getElementById("adHeaderCode").value = a.headerAd;
+          if (a.contentAd) document.getElementById("adContentCode").value = a.contentAd;
+          if (a.footerAd) document.getElementById("adFooterCode").value = a.footerAd;
+        }
+      } catch(e) {
+        console.error("Settings load error:", e);
+      }
+
+      // বট ও পোস্ট লিস্ট লোড
       try {
         const postsSnap = await getDocs(collection(db, "posts"));
         document.getElementById("totalPostsCount").innerText = postsSnap.size;
+        const postsTable = document.getElementById("postsTableBody");
         postsTable.innerHTML = "";
 
         if (postsSnap.empty) {
@@ -900,7 +955,10 @@
               <td>${isBot}</td>
               <td>${dateStr}</td>
               <td>
-                <button class="btn-delete" onclick="deletePost('${id}', '${p.title.replace(/'/g, "\\'")}')">
+                <button class="btn-edit" onclick="startEditPost('${id}')">
+                  <i class="fas fa-edit"></i> Edit
+                </button>
+                <button class="btn-delete" style="margin-left:4px;" onclick="deletePost('${id}', '${p.title.replace(/'/g, "\\'")}')">
                   <i class="fas fa-trash-alt"></i> Delete
                 </button>
               </td>
@@ -908,9 +966,9 @@
             postsTable.appendChild(tr);
           });
         }
-      } catch(e) {}
+      } catch(e) { console.error("Posts load error:", e); }
 
-      // Users Load
+      // ইউজার লিস্ট লোড
       try {
         const usersSnap = await getDocs(collection(db, "users"));
         document.getElementById("totalUsersCount").innerText = usersSnap.size;
@@ -926,17 +984,17 @@
 
         document.getElementById("vipUsersCount").innerText = vipCount;
         renderUserTable(cachedUsers);
-      } catch(e) {
-        console.error("Users load error: ", e);
-      }
+      } catch(e) { console.error("Users load error: ", e); }
 
-      // Visitors Analytics
+      // ২৪ ঘণ্টার ভিজিটর লোড
       try {
         const past24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000);
         const q = query(collection(db, "analytics"), where("timestamp", ">=", Timestamp.fromDate(past24Hours)));
         const analyticsSnap = await getDocs(q);
         document.getElementById("recentVisitorsCount").innerText = analyticsSnap.size;
-      } catch(e) {}
+      } catch(err) {
+        console.error("Analytics fetch error:", err);
+      }
     }
   </script>
 </body>
