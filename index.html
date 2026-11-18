@@ -3,196 +3,44 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - Control Panel</title>
+  <title>Admin Control Center</title>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 
   <style>
+    :root {
+      --bg-main: #0f172a;
+      --bg-card: #1e293b;
+      --bg-input: #0f172a;
+      --border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --green: #10b981;
+      --amber: #f59e0b;
+      --red: #ef4444;
+      --purple: #8b5cf6;
+      --pink: #ec4899;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #0f172a; color: #f8fafc; font-family: 'Open Sans', sans-serif; padding: 25px 15px; }
-    .container { max-width: 1100px; margin: 0 auto; }
-
-    header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 25px;
-      border-bottom: 1px solid #334155;
-      padding-bottom: 15px;
+    body {
+      background: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Open Sans', sans-serif;
+      min-height: 100vh;
     }
-    header h1 { font-size: 22px; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
-    .header-links { display: flex; align-items: center; gap: 12px; }
-    .btn-lock { background: #ef4444; color: #fff; padding: 7px 14px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; font-size: 13px; }
-    .btn-lock:hover { background: #dc2626; }
-
-    /* Stats Grid */
-    .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 30px; }
-    .stat-card {
-      background: #1e293b;
-      padding: 18px;
-      border-radius: 8px;
-      border: 1px solid #334155;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-    }
-    .stat-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 8px;
-      background: #0284c7;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 20px;
-    }
-    .stat-info h3 { font-size: 24px; font-weight: 700; }
-    .stat-info p { font-size: 12px; color: #94a3b8; }
-
-    /* Cards */
-    .upload-card, .table-card {
-      background: #1e293b;
-      padding: 25px;
-      border-radius: 8px;
-      border: 1px solid #334155;
-      margin-bottom: 30px;
-    }
-    .upload-card h2, .table-card h2 { font-size: 18px; margin-bottom: 18px; color: #38bdf8; display: flex; align-items: center; gap: 8px; }
-    .form-group { margin-bottom: 18px; }
-    label { display: block; font-size: 13px; margin-bottom: 6px; color: #cbd5e1; font-weight: 600; }
-    input[type="text"], input[type="number"], input[type="password"], textarea {
-      width: 100%;
-      padding: 12px;
-      background: #0f172a;
-      border: 1px solid #334155;
-      border-radius: 6px;
-      color: #fff;
-      font-family: inherit;
-    }
-    textarea { min-height: 95px; }
-
-    /* Buttons */
-    .btn-action {
-      background: #10b981;
-      color: #fff;
-      padding: 12px 26px;
-      border: none;
-      border-radius: 6px;
-      font-weight: 700;
-      cursor: pointer;
-      font-size: 14px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-    }
-    .btn-action:hover { background: #059669; }
-
-    .file-input-wrapper { display: flex; flex-direction: column; gap: 10px; }
-    .file-select-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: #0284c7;
-      color: #fff;
-      padding: 10px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 13px;
-      font-weight: 600;
-      width: fit-content;
-    }
-    input[type="file"] { display: none; }
-
-    .image-preview-container {
-      display: none;
-      margin-top: 10px;
-      position: relative;
-      width: fit-content;
-    }
-    .image-preview-container img {
-      max-width: 250px;
-      max-height: 160px;
-      border-radius: 6px;
-      border: 2px solid #38bdf8;
-      object-fit: cover;
-    }
-    .remove-img-btn {
-      position: absolute;
-      top: -8px;
-      right: -8px;
-      background: #ef4444;
-      color: #fff;
-      border: none;
-      width: 22px;
-      height: 22px;
-      border-radius: 50%;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
-    th, td { padding: 12px 10px; text-align: left; border-bottom: 1px solid #334155; vertical-align: middle; }
-    th { color: #38bdf8; background: #0f172a; }
-    .table-thumb { width: 55px; height: 40px; border-radius: 4px; object-fit: cover; }
-    
-    .btn-edit { background: #f59e0b; color: #000; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 12px; }
-    .btn-edit:hover { background: #d97706; }
-    .btn-delete { background: #ef4444; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 12px; }
-    .btn-delete:hover { background: #dc2626; }
-    .btn-reset { background: #0284c7; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
-    .btn-copy { background: #334155; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
-
-    /* VIP & Badges */
-    .badge-vip {
-      background: #78350f;
-      color: #f59e0b;
-      border: 1px solid #f59e0b;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-weight: 700;
-      font-size: 11px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .badge-free {
-      background: #0f2e4a;
-      color: #38bdf8;
-      border: 1px solid #0284c7;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 11px;
-    }
-    .badge-expired {
-      background: #450a0a;
-      color: #f87171;
-      border: 1px solid #ef4444;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-weight: 600;
-      font-size: 11px;
-    }
-
-    .btn-vip-on { background: #f59e0b; color: #000; border: none; padding: 6px 12px; border-radius: 4px; font-weight: 700; cursor: pointer; font-size: 11px; }
-    .btn-vip-off { background: #475569; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
-    .btn-extend-days { background: #10b981; color: #fff; border: none; padding: 6px 10px; border-radius: 4px; font-weight: 600; cursor: pointer; font-size: 11px; }
-
-    .status-active { color: #10b981; font-weight: bold; }
-    .status-used { color: #ef4444; }
 
     /* Lock Screen */
     #adminAuthGate {
       max-width: 420px;
-      margin: 80px auto;
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 10px;
-      padding: 35px 25px;
+      margin: 90px auto;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px 26px;
       text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
     }
     .key-lock-input {
       letter-spacing: 4px;
@@ -200,274 +48,883 @@
       font-size: 18px !important;
       font-weight: bold;
       border: 2px solid #0284c7 !important;
-      margin-bottom: 15px;
+      margin-bottom: 16px;
+    }
+
+    /* App Shell Layout */
+    #adminPanelArea { display: none; min-height: 100vh; }
+    .app-layout { display: flex; min-height: 100vh; }
+
+    /* Sidebar */
+    .sidebar {
+      width: 260px;
+      background: #111827;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: fixed;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+      transition: transform 0.25s ease;
+    }
+    .sidebar-brand {
+      padding: 20px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .sidebar-brand h2 {
+      font-size: 16px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .sidebar-nav {
+      padding: 14px 10px;
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .nav-btn {
+      width: 100%;
+      background: transparent;
+      border: none;
+      color: #cbd5e1;
+      padding: 11px 14px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+      transition: all 0.15s;
+    }
+    .nav-btn i { width: 18px; text-align: center; font-size: 14px; }
+    .nav-btn:hover { background: #1e293b; color: #fff; }
+    .nav-btn.active { background: #0284c7; color: #fff; }
+    .sidebar-footer {
+      padding: 14px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 260px;
+      padding: 22px 26px 50px;
+      max-width: 100%;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 16px;
+      margin-bottom: 22px;
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar-left { display: flex; align-items: center; gap: 12px; }
+    .mobile-menu-btn {
+      display: none;
+      background: var(--bg-card);
+      color: #fff;
+      border: 1px solid var(--border);
+      padding: 8px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .topbar h1 { font-size: 20px; color: var(--accent); }
+    .topbar-actions { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    .maint-pill {
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .maint-pill.on { background: #450a0a; color: #fca5a5; border: 1px solid var(--red); }
+    .maint-pill.off { background: #064e3b; color: #6ee7b7; border: 1px solid var(--green); }
+
+    /* Sections */
+    .tab-section { display: none; }
+    .tab-section.active { display: block; }
+
+    /* Cards & Grids */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 15px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      padding: 18px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: #0284c7;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+    .stat-info h3 { font-size: 23px; font-weight: 700; line-height: 1.2; }
+    .stat-info p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+
+    .card {
+      background: var(--bg-card);
+      padding: 22px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      margin-bottom: 22px;
+    }
+    .card h2 {
+      font-size: 17px;
+      margin-bottom: 16px;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px;
+    }
+
+    /* Forms */
+    .form-group { margin-bottom: 15px; }
+    label {
+      display: block;
+      font-size: 12.5px;
+      margin-bottom: 6px;
+      color: #cbd5e1;
+      font-weight: 600;
+    }
+    input[type="text"],
+    input[type="number"],
+    input[type="password"],
+    input[type="email"],
+    input[type="date"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 12px;
+      background: var(--bg-input);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #fff;
+      font-family: inherit;
+      font-size: 13.5px;
+    }
+    textarea { min-height: 90px; resize: vertical; }
+
+    /* Buttons */
+    .btn {
+      padding: 10px 18px;
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 13px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: #fff;
+      text-decoration: none;
+    }
+    .btn-sm { padding: 5px 10px; font-size: 11.5px; border-radius: 4px; }
+    .btn-green { background: var(--green); }
+    .btn-green:hover { background: #059669; }
+    .btn-blue { background: #0284c7; }
+    .btn-blue:hover { background: #0369a1; }
+    .btn-amber { background: var(--amber); color: #000; }
+    .btn-amber:hover { background: #d97706; }
+    .btn-red { background: var(--red); }
+    .btn-red:hover { background: #dc2626; }
+    .btn-slate { background: #475569; }
+    .btn-slate:hover { background: #334155; }
+    .btn-pink { background: var(--pink); }
+    .btn-purple { background: var(--purple); }
+
+    /* Tables */
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 13px; }
+    th, td {
+      padding: 11px 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--border);
+      vertical-align: middle;
+    }
+    th { color: var(--accent); background: #0f172a; font-size: 12px; text-transform: uppercase; letter-spacing: 0.4px; }
+    .table-thumb { width: 52px; height: 38px; border-radius: 4px; object-fit: cover; }
+
+    /* Badges */
+    .badge {
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    .badge-vip { background: #78350f; color: #fbbf24; border: 1px solid #f59e0b; }
+    .badge-active { background: #064e3b; color: #34d399; border: 1px solid #10b981; }
+    .badge-free { background: #0f2e4a; color: #38bdf8; border: 1px solid #0284c7; }
+    .badge-expired { background: #450a0a; color: #f87171; border: 1px solid #ef4444; }
+    .badge-banned { background: #7f1d1d; color: #fecaca; border: 1px solid #dc2626; }
+    .badge-hidden { background: #334155; color: #cbd5e1; border: 1px solid #64748b; }
+
+    /* Analytics Bar Chart */
+    .chart-box {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 10px;
+      height: 180px;
+      padding: 20px 10px 5px;
+      background: #0f172a;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
+    .chart-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+      gap: 6px;
+    }
+    .chart-val { font-size: 11px; color: var(--accent); font-weight: 700; }
+    .chart-bar {
+      width: 100%;
+      max-width: 44px;
+      background: linear-gradient(180deg, #38bdf8, #0284c7);
+      border-radius: 5px 5px 0 0;
+      min-height: 4px;
+      transition: height 0.3s ease;
+    }
+    .chart-lbl { font-size: 11px; color: var(--text-muted); }
+
+    /* File Upload & Preview */
+    .file-select-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #0284c7;
+      color: #fff;
+      padding: 9px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 12.5px;
+      font-weight: 600;
+      width: fit-content;
+    }
+    input[type="file"] { display: none; }
+    .image-preview-container {
+      display: none;
+      margin-top: 10px;
+      position: relative;
+      width: fit-content;
+    }
+    .image-preview-container img {
+      max-width: 240px;
+      max-height: 150px;
+      border-radius: 6px;
+      border: 2px solid var(--accent);
+      object-fit: cover;
+    }
+    .remove-img-btn {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--red);
+      color: #fff;
+      border: none;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+
+    /* Switch Toggle */
+    .switch-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px;
+      background: #0f172a;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+    .switch { position: relative; display: inline-block; width: 52px; height: 28px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider {
+      position: absolute; cursor: pointer; inset: 0;
+      background-color: #475569; transition: .3s; border-radius: 28px;
+    }
+    .slider:before {
+      position: absolute; content: ""; height: 20px; width: 20px;
+      left: 4px; bottom: 4px; background-color: white;
+      transition: .3s; border-radius: 50%;
+    }
+    input:checked + .slider { background-color: var(--red); }
+    input:checked + .slider:before { transform: translateX(24px); }
+
+    /* Toolbar filters */
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+    .toolbar-inputs { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+    /* Responsive */
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main-content { margin-left: 0; padding: 16px; }
+      .mobile-menu-btn { display: inline-flex; }
     }
   </style>
 </head>
 <body>
 
-  <!-- 1. Admin Verification Lock Screen -->
+  <!-- 1. Admin Lock Gate -->
   <div id="adminAuthGate">
-    <div style="font-size: 44px; color:#f59e0b; margin-bottom: 15px;"><i class="fas fa-user-shield"></i></div>
-    <h2 style="color:#fff; margin-bottom:8px; font-size: 20px;">Admin Access Gate</h2>
-    <p style="font-size:13px; color:#94a3b8; margin-bottom:20px;">Enter your secret master key to unlock dashboard.</p>
-    
-    <input type="password" id="adminSecretKeyInput" class="key-lock-input" placeholder="Enter Secret Key..." autocomplete="off" />
-    <button class="btn-action" id="btnAdminUnlock" style="width:100%; justify-content:center; background:#10b981;">
-      <i class="fas fa-unlock"></i> Unlock Dashboard
+    <div style="font-size: 44px; color: var(--amber); margin-bottom: 14px;"><i class="fas fa-user-shield"></i></div>
+    <h2 style="color:#fff; margin-bottom:8px; font-size: 20px;">Admin Control Gate</h2>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:20px;">Enter your secret master key to unlock the website control center.</p>
+    <input type="password" id="adminSecretKeyInput" class="key-lock-input" placeholder="Secret Key..." autocomplete="off" />
+    <button class="btn btn-green" id="btnAdminUnlock" style="width:100%; justify-content:center; padding:12px;">
+      <i class="fas fa-unlock"></i> Unlock Control Panel
     </button>
   </div>
 
-  <!-- 2. Main Admin Dashboard -->
-  <div class="container" id="adminPanelArea" style="display:none;">
-    
-    <header>
-      <h1><i class="fas fa-chart-line"></i> <span id="adminPanelHeaderName">Admin Dashboard</span></h1>
-      <div class="header-links">
-        <a href="index.html" target="_blank" style="color:#38bdf8; font-weight:600;"><i class="fas fa-external-link-alt"></i> View Website</a>
-        <button class="btn-lock" id="btnLockAdmin"><i class="fas fa-lock"></i> Lock Panel</button>
-      </div>
-    </header>
+  <!-- 2. Main Admin Control Center -->
+  <div id="adminPanelArea">
+    <div class="app-layout">
 
-    <!-- Analytics Dashboard Stats Grid -->
-    <div class="stats-grid">
-      <!-- Total Registered Users -->
-      <div class="stat-card">
-        <div class="stat-icon"><i class="fas fa-users"></i></div>
-        <div class="stat-info">
-          <h3 id="totalUsersCount">0</h3>
-          <p>Total Registered Users</p>
+      <!-- Sidebar -->
+      <aside class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+          <h2><i class="fas fa-shield-alt"></i> <span id="sidebarSiteName">Admin Panel</span></h2>
+          <button class="mobile-menu-btn" id="closeSidebarBtn" style="padding:4px 8px;"><i class="fas fa-times"></i></button>
         </div>
-      </div>
 
-      <!-- VIP Members -->
-      <div class="stat-card">
-        <div class="stat-icon" style="background:#f59e0b;"><i class="fas fa-crown"></i></div>
-        <div class="stat-info">
-          <h3 id="vipUsersCount" style="color:#f59e0b;">0</h3>
-          <p>Total VIP Users</p>
+        <nav class="sidebar-nav">
+          <button class="nav-btn active" data-tab="tab-overview"><i class="fas fa-chart-line"></i> Overview & Analytics</button>
+          <button class="nav-btn" data-tab="tab-users"><i class="fas fa-users-cog"></i> Users & Membership</button>
+          <button class="nav-btn" data-tab="tab-keys"><i class="fas fa-key"></i> Activation Keys</button>
+          <button class="nav-btn" data-tab="tab-posts"><i class="fas fa-robot"></i> Posts & Bots</button>
+          <button class="nav-btn" data-tab="tab-comments"><i class="fas fa-comments"></i> Comment Moderation</button>
+          <button class="nav-btn" data-tab="tab-settings"><i class="fas fa-sliders-h"></i> Site, Social & Maint.</button>
+          <button class="nav-btn" data-tab="tab-ads"><i class="fas fa-ad"></i> Ads Management</button>
+          <button class="nav-btn" data-tab="tab-logs"><i class="fas fa-history"></i> Admin Activity Logs</button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="https://twforid.web.app/" target="_blank" class="btn btn-blue" style="justify-content:center;"><i class="fas fa-external-link-alt"></i> View Live Site</a>
+          <button class="btn btn-red" id="btnLockAdmin" style="justify-content:center;"><i class="fas fa-lock"></i> Lock Panel</button>
         </div>
-      </div>
+      </aside>
 
-      <!-- ALL TIME Total Visitors -->
-      <div class="stat-card">
-        <div class="stat-icon" style="background:#0284c7;"><i class="fas fa-globe"></i></div>
-        <div class="stat-info">
-          <h3 id="allTimeVisitorsCount" style="color:#38bdf8;">0</h3>
-          <p>Total Visitors (All Time)</p>
-        </div>
-      </div>
-
-      <!-- TODAY'S Visitors (Past 24 Hours) -->
-      <div class="stat-card">
-        <div class="stat-icon" style="background:#10b981;"><i class="fas fa-eye"></i></div>
-        <div class="stat-info">
-          <h3 id="recentVisitorsCount" style="color:#34d399;">0</h3>
-          <p>Today's Visitors (24h)</p>
-        </div>
-      </div>
-
-      <!-- Total Posts / Bots -->
-      <div class="stat-card">
-        <div class="stat-icon" style="background:#8b5cf6;"><i class="fas fa-robot"></i></div>
-        <div class="stat-info">
-          <h3 id="totalPostsCount">0</h3>
-          <p>Total Posts / Bots</p>
-        </div>
-      </div>
-
-      <!-- Active 6-Digit Keys -->
-      <div class="stat-card">
-        <div class="stat-icon" style="background:#6366f1;"><i class="fas fa-key"></i></div>
-        <div class="stat-info">
-          <h3 id="totalKeysCount">0</h3>
-          <p>Active 6-Digit Keys</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- Website Ads Management Card -->
-    <div class="upload-card" style="border-left: 5px solid #ec4899;">
-      <h2><i class="fas fa-ad"></i> Website Ads Management</h2>
-      <p style="font-size:12.5px; color:#94a3b8; margin-bottom:15px;">
-        Insert your AdSense banners or third-party ad network script codes here and save.
-      </p>
-
-      <div class="form-group">
-        <label><i class="fas fa-code"></i> Header Ad Script / Banner HTML:</label>
-        <textarea id="adHeaderCode" placeholder="<script>...</script> or <ins class='adsbygoogle' ...></ins>"></textarea>
-      </div>
-
-      <div class="form-group">
-        <label><i class="fas fa-code"></i> In-Content / Bot Page Ad Code:</label>
-        <textarea id="adContentCode" placeholder="Paste your banner or in-article ad script here..."></textarea>
-      </div>
-
-      <div class="form-group">
-        <label><i class="fas fa-code"></i> Footer / Floating Ad Script:</label>
-        <textarea id="adFooterCode" placeholder="Paste footer or floating banner script here..."></textarea>
-      </div>
-
-      <button class="btn-action" id="saveAdsBtn" style="background:#ec4899;">
-        <i class="fas fa-save"></i> Save Ad Codes
-      </button>
-    </div>
-
-    <!-- User Management Table -->
-    <div class="table-card" style="border-left: 5px solid #f59e0b;">
-      <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:15px;">
-        <h2 style="margin-bottom:0;"><i class="fas fa-users-cog"></i> User Access & VIP Management</h2>
-        <div style="width:280px;">
-          <input type="text" id="userSearchInput" placeholder="Search user by email or name..." style="padding:8px 12px; font-size:13px;" />
-        </div>
-      </div>
-
-      <div style="overflow-x:auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>User Details</th>
-              <th>Membership</th>
-              <th>Expiry Date</th>
-              <th>VIP Control</th>
-              <th>Manage / Action</th>
-            </tr>
-          </thead>
-          <tbody id="userTableBody">
-            <tr><td colspan="5" style="text-align:center;">Loading users...</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- 6-Digit Activation Key Generator Section -->
-    <div class="upload-card" style="border-left: 5px solid #10b981;">
-      <h2><i class="fas fa-key"></i> 6-Digit Key Generator (Trial Access Keys)</h2>
-      <div style="display:flex; flex-wrap:wrap; gap:15px; align-items:flex-end;">
-        <div class="form-group" style="flex:1; min-width:220px; margin-bottom:0;">
-          <label>Validity Duration (Days):</label>
-          <input type="number" id="keyDurationDays" value="30" placeholder="e.g. 7, 30, 90" />
-        </div>
-        <button class="btn-action" id="btnGenerateKey" style="background:#10b981; height:45px;">
-          <i class="fas fa-magic"></i> Generate 6-Digit Key
-        </button>
-      </div>
-
-      <div style="margin-top:20px; overflow-x:auto;">
-        <table>
-          <thead>
-            <tr>
-              <th>6-Digit Key</th>
-              <th>Validity</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody id="keysTableBody">
-            <tr><td colspan="4">Loading keys...</td></tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-
-    <!-- Website Settings Card -->
-    <div class="upload-card" style="border-left: 5px solid #38bdf8;">
-      <h2><i class="fas fa-sliders-h"></i> Website Settings (Change Site Name & Logo)</h2>
-      <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:15px;">
-        <div class="form-group">
-          <label>Website Name:</label>
-          <input type="text" id="settingSiteName" placeholder="e.g. tradewithforid" />
-        </div>
-        <div class="form-group">
-          <label>Website Logo URL:</label>
-          <input type="text" id="settingLogoUrl" placeholder="Image URL (https://...)" />
-        </div>
-      </div>
-      <button class="btn-action" id="saveSettingsBtn" style="background:#0284c7;">
-        <i class="fas fa-save"></i> Save Site Settings
-      </button>
-    </div>
-
-    <!-- Publish & Edit Bot Form -->
-    <div class="upload-card" id="botFormCard">
-      <h2><i class="fas fa-robot"></i> <span id="formHeaderTitle">Publish New Bot / Post</span></h2>
-
-      <div class="form-group">
-        <label>Post / Bot Title:</label>
-        <input type="text" id="postTitle" placeholder="e.g. Quotex 1M Sure Shot Sniping Bot..." required />
-      </div>
-
-      <div class="form-group">
-        <label><i class="fas fa-image"></i> Upload Thumbnail Image:</label>
-        <div class="file-input-wrapper">
-          <label class="file-select-btn" for="postImageFileInput">
-            <i class="fas fa-folder-open"></i> Select Image from Device
-          </label>
-          <input type="file" id="postImageFileInput" accept="image/*" />
-          <div class="image-preview-container" id="imagePreviewBox">
-            <img id="imagePreview" src="" alt="Selected Preview" />
-            <button type="button" class="remove-img-btn" id="removeImgBtn">&times;</button>
+      <!-- Main Area -->
+      <main class="main-content">
+        <div class="topbar">
+          <div class="topbar-left">
+            <button class="mobile-menu-btn" id="openSidebarBtn"><i class="fas fa-bars"></i></button>
+            <h1 id="currentSectionTitle">Overview & Analytics</h1>
+          </div>
+          <div class="topbar-actions">
+            <span id="maintenanceStatusPill" class="maint-pill off"><i class="fas fa-check-circle"></i> Site Online</span>
+            <button class="btn btn-slate btn-sm" id="btnRefreshAll"><i class="fas fa-sync-alt"></i> Refresh Data</button>
           </div>
         </div>
-        <input type="text" id="postThumbnailUrl" placeholder="Or paste image URL (https://...)" style="margin-top:8px;" />
-      </div>
 
-      <div class="form-group">
-        <label><i class="fas fa-code"></i> Upload HTML Code File (.html or .txt):</label>
-        <div class="file-input-wrapper">
-          <label class="file-select-btn" for="htmlFileInput" style="background:#475569;">
-            <i class="fas fa-file-code"></i> Select .html / .txt Bot File
-          </label>
-          <input type="file" id="htmlFileInput" accept=".html,.htm,.txt" />
-        </div>
-      </div>
+        <!-- TAB 1: OVERVIEW & ANALYTICS -->
+        <section id="tab-overview" class="tab-section active">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-users"></i></div>
+              <div class="stat-info">
+                <h3 id="totalUsersCount">0</h3>
+                <p>Total Registered Users</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: var(--green);"><i class="fas fa-user-check"></i></div>
+              <div class="stat-info">
+                <h3 id="activeUsersCount" style="color:#34d399;">0</h3>
+                <p>Active Users (Trial + VIP)</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: var(--amber);"><i class="fas fa-crown"></i></div>
+              <div class="stat-info">
+                <h3 id="vipUsersCount" style="color:#fbbf24;">0</h3>
+                <p>VIP Users</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: var(--red);"><i class="fas fa-user-slash"></i></div>
+              <div class="stat-info">
+                <h3 id="bannedUsersCount" style="color:#f87171;">0</h3>
+                <p>Banned Users</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: var(--purple);"><i class="fas fa-robot"></i></div>
+              <div class="stat-info">
+                <h3 id="totalBotsCount">0</h3>
+                <p>Total Bots</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: #0ea5e9;"><i class="fas fa-newspaper"></i></div>
+              <div class="stat-info">
+                <h3 id="totalArticlesCount">0</h3>
+                <p>Published Posts</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: #6366f1;"><i class="fas fa-key"></i></div>
+              <div class="stat-info">
+                <h3 id="totalKeysCount">0</h3>
+                <p>Active Keys</p>
+              </div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-icon" style="background: var(--pink);"><i class="fas fa-globe"></i></div>
+              <div class="stat-info">
+                <h3 id="allTimeVisitorsCount">0</h3>
+                <p>All-Time Visitors</p>
+              </div>
+            </div>
+          </div>
 
-      <div class="form-group">
-        <label>Post Description (Text displayed on the article page):</label>
-        <textarea id="postDescription" placeholder="Write instructions, rules, or details about the bot..."></textarea>
-      </div>
+          <!-- Daily / Weekly / Monthly Analytics -->
+          <div class="card" style="border-left: 4px solid var(--accent);">
+            <h2><i class="fas fa-chart-bar"></i> Daily, Weekly & Monthly Traffic Analytics</h2>
+            <div class="stats-grid" style="margin-bottom: 18px;">
+              <div class="stat-card" style="background:#0f172a;">
+                <div class="stat-icon" style="background: #10b981;"><i class="fas fa-calendar-day"></i></div>
+                <div class="stat-info">
+                  <h3 id="dailyVisitorsCount" style="color:#34d399;">0</h3>
+                  <p>Daily Visitors (24h)</p>
+                </div>
+              </div>
+              <div class="stat-card" style="background:#0f172a;">
+                <div class="stat-icon" style="background: #0284c7;"><i class="fas fa-calendar-week"></i></div>
+                <div class="stat-info">
+                  <h3 id="weeklyVisitorsCount" style="color:#38bdf8;">0</h3>
+                  <p>Weekly Visitors (7 Days)</p>
+                </div>
+              </div>
+              <div class="stat-card" style="background:#0f172a;">
+                <div class="stat-icon" style="background: #8b5cf6;"><i class="fas fa-calendar-alt"></i></div>
+                <div class="stat-info">
+                  <h3 id="monthlyVisitorsCount" style="color:#c4b5fd;">0</h3>
+                  <p>Monthly Visitors (30 Days)</p>
+                </div>
+              </div>
+            </div>
+            <label>Last 7 Days Visitor Trend</label>
+            <div class="chart-box" id="weeklyChartBox">
+              <div style="color:var(--text-muted); margin:auto;">Loading chart...</div>
+            </div>
+          </div>
+        </section>
 
-      <div class="form-group">
-        <label>Full HTML Code (Runs in fullscreen bot mode):</label>
-        <textarea id="postHtmlContent" placeholder="Paste full HTML bot code here or upload .html file..."></textarea>
-      </div>
+        <!-- TAB 2: USERS & MEMBERSHIP -->
+        <section id="tab-users" class="tab-section">
+          <div class="card" style="border-left: 4px solid var(--amber);">
+            <div class="toolbar">
+              <h2 style="margin-bottom:0;"><i class="fas fa-users-cog"></i> User Access, Ban & Membership Control</h2>
+              <div class="toolbar-inputs">
+                <input type="text" id="userSearchInput" placeholder="Search email or name..." style="width:220px;" />
+                <select id="userFilterSelect" style="width:160px;">
+                  <option value="all">All Users</option>
+                  <option value="vip">VIP Only</option>
+                  <option value="active">Active Trial</option>
+                  <option value="expired">Expired</option>
+                  <option value="banned">Banned Users</option>
+                </select>
+              </div>
+            </div>
 
-      <div style="display:flex; gap:10px; align-items:center;">
-        <button class="btn-action" id="publishBtn">
-          <i class="fas fa-paper-plane"></i> <span id="publishBtnText">Publish Post</span>
-        </button>
-        <button type="button" class="btn-action" id="cancelEditBtn" style="background:#64748b; display:none;">
-          <i class="fas fa-times"></i> Cancel Edit
-        </button>
-      </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>User</th>
+                    <th>Membership</th>
+                    <th>Expiry</th>
+                    <th>VIP & Trial Extend</th>
+                    <th>Ban & Controls</th>
+                  </tr>
+                </thead>
+                <tbody id="userTableBody">
+                  <tr><td colspan="5" style="text-align:center;">Loading users...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 3: ACTIVATION KEYS (SINGLE + BULK + EXPIRY + USAGE) -->
+        <section id="tab-keys" class="tab-section">
+          <div class="grid-2">
+            <!-- Single Key Generator -->
+            <div class="card" style="border-left: 4px solid var(--green);">
+              <h2><i class="fas fa-key"></i> Single Key Generator</h2>
+              <div class="form-group">
+                <label>Access Validity (Days after activation):</label>
+                <input type="number" id="keyDurationDays" value="30" min="1" />
+              </div>
+              <div class="form-group">
+                <label>Key Expiration Date (Optional - Key becomes invalid if unused by this date):</label>
+                <input type="date" id="singleKeyExpiryDate" />
+              </div>
+              <button class="btn btn-green" id="btnGenerateKey"><i class="fas fa-magic"></i> Generate 6-Digit Key</button>
+            </div>
+
+            <!-- Bulk Key Generator -->
+            <div class="card" style="border-left: 4px solid var(--purple);">
+              <h2><i class="fas fa-layer-group"></i> Bulk Key Generator</h2>
+              <div class="grid-2" style="gap:12px;">
+                <div class="form-group">
+                  <label>How Many Keys? (1 - 100):</label>
+                  <input type="number" id="bulkKeyCount" value="10" min="1" max="100" />
+                </div>
+                <div class="form-group">
+                  <label>Access Validity (Days):</label>
+                  <input type="number" id="bulkKeyDays" value="30" min="1" />
+                </div>
+              </div>
+              <div class="grid-2" style="gap:12px;">
+                <div class="form-group">
+                  <label>Key Expiry Date (Optional):</label>
+                  <input type="date" id="bulkKeyExpiryDate" />
+                </div>
+                <div class="form-group">
+                  <label>Batch Note / Campaign:</label>
+                  <input type="text" id="bulkBatchNote" placeholder="e.g. Promo Batch Nov" />
+                </div>
+              </div>
+              <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                <button class="btn btn-purple" id="btnGenerateBulkKeys"><i class="fas fa-bolt"></i> Generate Bulk Keys</button>
+                <button class="btn btn-slate" id="btnCopyLastBulk" style="display:none;"><i class="fas fa-copy"></i> Copy Generated Batch</button>
+              </div>
+              <textarea id="bulkOutputBox" readonly style="display:none; margin-top:12px; min-height:80px; font-family:monospace;"></textarea>
+            </div>
+          </div>
+
+          <!-- Key Usage & Expiry Management Table -->
+          <div class="card">
+            <div class="toolbar">
+              <h2 style="margin-bottom:0;"><i class="fas fa-tasks"></i> Key Expiry & Usage Management</h2>
+              <div class="toolbar-inputs">
+                <select id="keyFilterSelect" style="width:170px;">
+                  <option value="all">All Keys</option>
+                  <option value="active">Active (Unused)</option>
+                  <option value="used">Used</option>
+                  <option value="expired">Expired / Revoked</option>
+                </select>
+                <button class="btn btn-slate btn-sm" id="btnExportActiveKeys"><i class="fas fa-download"></i> Copy All Active Keys</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>6-Digit Key</th>
+                    <th>Access Days</th>
+                    <th>Key Expires</th>
+                    <th>Status</th>
+                    <th>Used By / Note</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="keysTableBody">
+                  <tr><td colspan="6" style="text-align:center;">Loading keys...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 4: POSTS & BOTS -->
+        <section id="tab-posts" class="tab-section">
+          <div class="card" id="botFormCard">
+            <h2><i class="fas fa-robot"></i> <span id="formHeaderTitle">Publish New Bot / Post</span></h2>
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Post / Bot Title:</label>
+                <input type="text" id="postTitle" placeholder="e.g. Quotex 1M Sniping Bot..." />
+              </div>
+              <div class="form-group">
+                <label>Moderation Status:</label>
+                <select id="postStatus">
+                  <option value="published">Published (Visible)</option>
+                  <option value="hidden">Hidden (Moderated)</option>
+                  <option value="draft">Draft</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-image"></i> Thumbnail Image:</label>
+              <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <label class="file-select-btn" for="postImageFileInput"><i class="fas fa-folder-open"></i> Upload Image</label>
+                <input type="file" id="postImageFileInput" accept="image/*" />
+                <input type="text" id="postThumbnailUrl" placeholder="Or paste image URL (https://...)" style="flex:1; min-width:220px;" />
+              </div>
+              <div class="image-preview-container" id="imagePreviewBox">
+                <img id="imagePreview" src="" alt="Preview" />
+                <button type="button" class="remove-img-btn" id="removeImgBtn">&times;</button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label><i class="fas fa-file-code"></i> Upload HTML Bot File (.html or .txt):</label>
+              <label class="file-select-btn" for="htmlFileInput" style="background:#475569;"><i class="fas fa-upload"></i> Select .html / .txt File</label>
+              <input type="file" id="htmlFileInput" accept=".html,.htm,.txt" />
+            </div>
+
+            <div class="form-group">
+              <label>Post Description:</label>
+              <textarea id="postDescription" placeholder="Write instructions or details..."></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Full HTML Bot Code (Leave blank for standard article post):</label>
+              <textarea id="postHtmlContent" placeholder="Paste full HTML bot code here..."></textarea>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+              <button class="btn btn-green" id="publishBtn"><i class="fas fa-paper-plane"></i> <span id="publishBtnText">Publish Post</span></button>
+              <button class="btn btn-slate" id="cancelEditBtn" style="display:none;"><i class="fas fa-times"></i> Cancel Edit</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="toolbar">
+              <h2 style="margin-bottom:0;"><i class="fas fa-list"></i> Post Moderation & Management</h2>
+              <input type="text" id="postSearchInput" placeholder="Search posts or bots..." style="width:240px;" />
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Thumb</th>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Moderation / Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="postsTableBody">
+                  <tr><td colspan="6" style="text-align:center;">Loading posts...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 5: COMMENT MODERATION -->
+        <section id="tab-comments" class="tab-section">
+          <div class="card" style="border-left: 4px solid var(--accent);">
+            <div class="toolbar">
+              <h2 style="margin-bottom:0;"><i class="fas fa-comments"></i> Comment Moderation</h2>
+              <select id="commentFilterSelect" style="width:180px;">
+                <option value="all">All Comments</option>
+                <option value="pending">Pending Review</option>
+                <option value="approved">Approved</option>
+                <option value="hidden">Hidden</option>
+              </select>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Author</th>
+                    <th>Post / Bot</th>
+                    <th>Comment</th>
+                    <th>Status</th>
+                    <th>Moderation</th>
+                  </tr>
+                </thead>
+                <tbody id="commentsTableBody">
+                  <tr><td colspan="5" style="text-align:center;">Loading comments...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- TAB 6: WEBSITE SETTINGS, SOCIAL LINKS & MAINTENANCE MODE -->
+        <section id="tab-settings" class="tab-section">
+          <div class="card" style="border-left: 4px solid var(--red);">
+            <h2><i class="fas fa-tools"></i> Website Maintenance Mode</h2>
+            <div class="switch-row">
+              <div>
+                <strong style="font-size:14px;">Enable Maintenance Mode</strong>
+                <p style="font-size:12px; color:var(--text-muted); margin-top:3px;">When enabled, public visitors see the maintenance notice instead of the website.</p>
+              </div>
+              <label class="switch">
+                <input type="checkbox" id="maintenanceToggle" />
+                <span class="slider"></span>
+              </label>
+            </div>
+            <div class="form-group">
+              <label>Maintenance Notice Message:</label>
+              <textarea id="maintenanceMessage" placeholder="We are upgrading our bots and servers. Back online shortly!"></textarea>
+            </div>
+            <button class="btn btn-red" id="saveMaintenanceBtn"><i class="fas fa-save"></i> Save Maintenance Settings</button>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--accent);">
+            <h2><i class="fas fa-sliders-h"></i> Website Logo, Name & Social Link Control</h2>
+            <div class="grid-2">
+              <div class="form-group">
+                <label>Website Name:</label>
+                <input type="text" id="settingSiteName" placeholder="e.g. TradeWithForid" />
+              </div>
+              <div class="form-group">
+                <label>Website Logo URL:</label>
+                <input type="text" id="settingLogoUrl" placeholder="https://..." />
+              </div>
+              <div class="form-group">
+                <label><i class="fab fa-telegram"></i> Telegram Channel / Support URL:</label>
+                <input type="text" id="socialTelegram" placeholder="https://t.me/..." />
+              </div>
+              <div class="form-group">
+                <label><i class="fab fa-youtube"></i> YouTube Channel URL:</label>
+                <input type="text" id="socialYoutube" placeholder="https://youtube.com/..." />
+              </div>
+              <div class="form-group">
+                <label><i class="fab fa-facebook"></i> Facebook Page URL:</label>
+                <input type="text" id="socialFacebook" placeholder="https://facebook.com/..." />
+              </div>
+              <div class="form-group">
+                <label><i class="fab fa-whatsapp"></i> WhatsApp Contact / Group URL:</label>
+                <input type="text" id="socialWhatsapp" placeholder="https://wa.me/..." />
+              </div>
+              <div class="form-group">
+                <label><i class="fab fa-instagram"></i> Instagram / Discord URL:</label>
+                <input type="text" id="socialInstagram" placeholder="https://..." />
+              </div>
+              <div class="form-group">
+                <label><i class="fas fa-envelope"></i> Support Email:</label>
+                <input type="email" id="socialEmail" placeholder="support@example.com" />
+              </div>
+            </div>
+            <button class="btn btn-blue" id="saveSettingsBtn"><i class="fas fa-save"></i> Save Site & Social Settings</button>
+          </div>
+        </section>
+
+        <!-- TAB 7: ADS MANAGEMENT -->
+        <section id="tab-ads" class="tab-section">
+          <div class="card" style="border-left: 4px solid var(--pink);">
+            <h2><i class="fas fa-ad"></i> Website Ads Management</h2>
+            <div class="form-group">
+              <label>Header Ad Script / Banner HTML:</label>
+              <textarea id="adHeaderCode" placeholder="<script>...</script>"></textarea>
+            </div>
+            <div class="form-group">
+              <label>In-Content / Bot Page Ad Code:</label>
+              <textarea id="adContentCode" placeholder="Paste in-article ad script..."></textarea>
+            </div>
+            <div class="form-group">
+              <label>Footer / Floating Ad Script:</label>
+              <textarea id="adFooterCode" placeholder="Paste footer banner script..."></textarea>
+            </div>
+            <button class="btn btn-pink" id="saveAdsBtn"><i class="fas fa-save"></i> Save Ad Codes</button>
+          </div>
+        </section>
+
+        <!-- TAB 8: ADMIN ACTIVITY LOGS -->
+        <section id="tab-logs" class="tab-section">
+          <div class="card" style="border-left: 4px solid #6366f1;">
+            <div class="toolbar">
+              <h2 style="margin-bottom:0;"><i class="fas fa-history"></i> Admin Activity Logs</h2>
+              <div class="toolbar-inputs">
+                <select id="logCategoryFilter" style="width:170px;">
+                  <option value="all">All Categories</option>
+                  <option value="Auth">Auth</option>
+                  <option value="Users">Users</option>
+                  <option value="Keys">Keys</option>
+                  <option value="Posts">Posts & Bots</option>
+                  <option value="Comments">Comments</option>
+                  <option value="Settings">Settings & Ads</option>
+                </select>
+                <button class="btn btn-red btn-sm" id="btnClearLogs"><i class="fas fa-trash"></i> Clear Old Logs</button>
+              </div>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Time</th>
+                    <th>Category</th>
+                    <th>Action</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="logsTableBody">
+                  <tr><td colspan="4" style="text-align:center;">Loading activity logs...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
     </div>
-
-    <!-- Manage Posts Table -->
-    <div class="table-card">
-      <h2><i class="fas fa-tasks"></i> Manage Published Posts & Bots</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Thumbnail</th>
-            <th>Title</th>
-            <th>Type</th>
-            <th>Published Date</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody id="postsTableBody">
-          <tr><td colspan="5">Loading posts...</td></tr>
-        </tbody>
-      </table>
-    </div>
-
   </div>
 
   <!-- Firebase Scripts -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
-    import { 
-      getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc, query, serverTimestamp, where, Timestamp, deleteDoc, onSnapshot, orderBy 
+    import {
+      getFirestore, collection, addDoc, getDocs, doc, setDoc, getDoc, updateDoc,
+      query, serverTimestamp, where, Timestamp, deleteDoc, onSnapshot, orderBy, limit, writeBatch
     } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js";
     import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js";
     import { getAuth, sendPasswordResetEmail } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js";
@@ -486,34 +943,80 @@
     const storage = getStorage(app);
     const auth = getAuth(app);
 
-    const ADMIN_SECRET_KEY = "forid23"; 
+    const ADMIN_SECRET_KEY = "forid23";
     let cachedUsers = [];
+    let cachedKeys = [];
+    let cachedPosts = [];
+    let cachedComments = [];
+    let cachedLogs = [];
     let editingPostId = null;
+    let selectedImageFile = null;
+    let hasHtmlFile = false;
+    let keysUnsub = null;
+    let logsUnsub = null;
 
-    // 1. Session Lock Validation
+    function esc(str) {
+      return String(str ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    // Activity Logger
+    async function logAdminActivity(category, action, details) {
+      try {
+        await addDoc(collection(db, "admin_logs"), {
+          category,
+          action,
+          details,
+          createdAt: serverTimestamp()
+        });
+      } catch (e) {
+        console.error("Log write error:", e);
+      }
+    }
+
+    // Sidebar Navigation
+    const sidebar = document.getElementById("sidebar");
+    document.getElementById("openSidebarBtn").onclick = () => sidebar.classList.add("open");
+    document.getElementById("closeSidebarBtn").onclick = () => sidebar.classList.remove("open");
+
+    document.querySelectorAll(".nav-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".nav-btn").forEach(b => b.classList.remove("active"));
+        document.querySelectorAll(".tab-section").forEach(s => s.classList.remove("active"));
+        btn.classList.add("active");
+        const tabId = btn.dataset.tab;
+        document.getElementById(tabId).classList.add("active");
+        document.getElementById("currentSectionTitle").innerText = btn.innerText.trim();
+        sidebar.classList.remove("open");
+      });
+    });
+
+    // 1. Session Lock Gate
     function checkAdminSession() {
       if (sessionStorage.getItem("admin_session_auth") === "yes") {
         document.getElementById("adminAuthGate").style.display = "none";
         document.getElementById("adminPanelArea").style.display = "block";
-        loadAdminData();
-        loadRealtimeKeys();
+        initDashboard();
       } else {
         document.getElementById("adminAuthGate").style.display = "block";
         document.getElementById("adminPanelArea").style.display = "none";
       }
     }
-    checkAdminSession();
 
-    document.getElementById("btnAdminUnlock").onclick = () => {
+    document.getElementById("btnAdminUnlock").onclick = async () => {
       const key = document.getElementById("adminSecretKeyInput").value.trim();
       if (key === ADMIN_SECRET_KEY) {
         sessionStorage.setItem("admin_session_auth", "yes");
         document.getElementById("adminAuthGate").style.display = "none";
         document.getElementById("adminPanelArea").style.display = "block";
-        loadAdminData();
-        loadRealtimeKeys();
+        await logAdminActivity("Auth", "Admin Unlocked", "Admin dashboard session unlocked");
+        initDashboard();
       } else {
-        alert("❌ Invalid Secret Key! Please try again.");
+        alert("Invalid Secret Key!");
       }
     };
 
@@ -521,193 +1024,531 @@
       if (e.key === "Enter") document.getElementById("btnAdminUnlock").click();
     });
 
-    document.getElementById("btnLockAdmin").onclick = () => {
+    document.getElementById("btnLockAdmin").onclick = async () => {
+      await logAdminActivity("Auth", "Admin Locked", "Admin dashboard session locked");
       sessionStorage.removeItem("admin_session_auth");
       document.getElementById("adminSecretKeyInput").value = "";
       document.getElementById("adminAuthGate").style.display = "block";
       document.getElementById("adminPanelArea").style.display = "none";
     };
 
-    // 2. Ads Management Save
-    document.getElementById("saveAdsBtn").onclick = async () => {
-      const headerCode = document.getElementById("adHeaderCode").value;
-      const contentCode = document.getElementById("adContentCode").value;
-      const footerCode = document.getElementById("adFooterCode").value;
+    document.getElementById("btnRefreshAll").onclick = () => loadAdminData();
 
-      try {
-        await setDoc(doc(db, "settings", "ads"), {
-          headerAd: headerCode,
-          contentAd: contentCode,
-          footerAd: footerCode,
-          updatedAt: serverTimestamp()
-        }, { merge: true });
-
-        alert("Ad codes saved successfully!");
-      } catch(e) {
-        alert("Failed to save ads: " + e.message);
-      }
-    };
-
-    // 3. 6-Digit Key Generator
-    document.getElementById("btnGenerateKey").onclick = async () => {
-      const days = parseInt(document.getElementById("keyDurationDays").value);
-      if (!days || days <= 0) return alert("Please enter a valid number of days.");
-
-      const randomCode = Math.floor(100000 + Math.random() * 900000).toString();
-
-      try {
-        await addDoc(collection(db, "activation_keys"), {
-          code: randomCode,
-          durationDays: days,
-          isUsed: false,
-          createdAt: serverTimestamp()
-        });
-        alert(`Successfully generated 6-digit key: ${randomCode} (Valid for ${days} days)`);
-      } catch(e) {
-        alert("Key Generate Error: " + e.message);
-      }
-    };
-
-    function loadRealtimeKeys() {
-      const tbody = document.getElementById("keysTableBody");
-      const q = query(collection(db, "activation_keys"), orderBy("createdAt", "desc"));
-      
-      onSnapshot(q, (snapshot) => {
-        tbody.innerHTML = "";
-        let activeKeysCount = 0;
-
-        if (snapshot.empty) {
-          tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#94a3b8;">No keys generated yet.</td></tr>`;
-          document.getElementById("totalKeysCount").innerText = 0;
-          return;
-        }
-
-        snapshot.forEach(docSnap => {
-          const k = docSnap.data();
-          if (!k.isUsed) activeKeysCount++;
-
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td><b style="color:#38bdf8; font-size:15px; letter-spacing:1px;">${k.code}</b></td>
-            <td>${k.durationDays} Days</td>
-            <td>${k.isUsed ? `<span class="status-used">Used</span>` : `<span class="status-active">Active</span>`}</td>
-            <td>
-              <button class="btn-copy" onclick="copyKey('${k.code}')"><i class="fas fa-copy"></i> Copy</button>
-              <button class="btn-delete" style="padding:5px 10px; margin-left:5px;" onclick="deleteKey('${docSnap.id}')"><i class="fas fa-trash"></i></button>
-            </td>
-          `;
-          tbody.appendChild(tr);
-        });
-
-        document.getElementById("totalKeysCount").innerText = activeKeysCount;
-      });
+    function initDashboard() {
+      loadAdminData();
+      listenKeys();
+      listenLogs();
     }
 
-    window.copyKey = (code) => {
-      navigator.clipboard.writeText(code);
-      alert("Key Copied: " + code);
-    };
+    // 2. Load Settings, Users, Posts, Comments & Analytics
+    async function loadAdminData() {
+      await Promise.all([
+        loadSettingsAndAds(),
+        loadUsers(),
+        loadPosts(),
+        loadComments(),
+        loadAnalytics()
+      ]);
+    }
 
-    window.deleteKey = async (id) => {
-      if (confirm("Are you sure you want to delete this Key?")) {
-        try {
-          await deleteDoc(doc(db, "activation_keys", id));
-        } catch(e) { alert("Delete error: " + e.message); }
+    async function loadSettingsAndAds() {
+      try {
+        const settingsDoc = await getDoc(doc(db, "settings", "general"));
+        if (settingsDoc.exists()) {
+          const s = settingsDoc.data();
+          if (s.siteName) {
+            document.getElementById("settingSiteName").value = s.siteName;
+            document.getElementById("sidebarSiteName").innerText = s.siteName;
+          }
+          if (s.logoUrl) document.getElementById("settingLogoUrl").value = s.logoUrl;
+
+          const isMaint = s.maintenanceMode === true;
+          document.getElementById("maintenanceToggle").checked = isMaint;
+          document.getElementById("maintenanceMessage").value = s.maintenanceMessage || "";
+          updateMaintenancePill(isMaint);
+
+          const soc = s.socialLinks || {};
+          document.getElementById("socialTelegram").value = soc.telegram || "";
+          document.getElementById("socialYoutube").value = soc.youtube || "";
+          document.getElementById("socialFacebook").value = soc.facebook || "";
+          document.getElementById("socialWhatsapp").value = soc.whatsapp || "";
+          document.getElementById("socialInstagram").value = soc.instagram || "";
+          document.getElementById("socialEmail").value = soc.supportEmail || "";
+        }
+
+        const adsDoc = await getDoc(doc(db, "settings", "ads"));
+        if (adsDoc.exists()) {
+          const a = adsDoc.data();
+          document.getElementById("adHeaderCode").value = a.headerAd || "";
+          document.getElementById("adContentCode").value = a.contentAd || "";
+          document.getElementById("adFooterCode").value = a.footerAd || "";
+        }
+      } catch (e) {
+        console.error("Settings load error:", e);
+      }
+    }
+
+    function updateMaintenancePill(isOn) {
+      const pill = document.getElementById("maintenanceStatusPill");
+      if (isOn) {
+        pill.className = "maint-pill on";
+        pill.innerHTML = `<i class="fas fa-tools"></i> Maintenance ON`;
+      } else {
+        pill.className = "maint-pill off";
+        pill.innerHTML = `<i class="fas fa-check-circle"></i> Site Online`;
+      }
+    }
+
+    document.getElementById("saveMaintenanceBtn").onclick = async () => {
+      const maintenanceMode = document.getElementById("maintenanceToggle").checked;
+      const maintenanceMessage = document.getElementById("maintenanceMessage").value.trim();
+      try {
+        await setDoc(doc(db, "settings", "general"), {
+          maintenanceMode,
+          maintenanceMessage,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+        updateMaintenancePill(maintenanceMode);
+        await logAdminActivity("Settings", "Maintenance Mode Updated", `Status: ${maintenanceMode ? "ENABLED" : "DISABLED"}`);
+        alert("Maintenance settings saved!");
+      } catch (e) {
+        alert("Error: " + e.message);
       }
     };
 
-    // 4. Website Settings Save
     document.getElementById("saveSettingsBtn").onclick = async () => {
       const siteName = document.getElementById("settingSiteName").value.trim();
       const logoUrl = document.getElementById("settingLogoUrl").value.trim();
       if (!siteName) return alert("Please enter a website name.");
 
+      const socialLinks = {
+        telegram: document.getElementById("socialTelegram").value.trim(),
+        youtube: document.getElementById("socialYoutube").value.trim(),
+        facebook: document.getElementById("socialFacebook").value.trim(),
+        whatsapp: document.getElementById("socialWhatsapp").value.trim(),
+        instagram: document.getElementById("socialInstagram").value.trim(),
+        supportEmail: document.getElementById("socialEmail").value.trim()
+      };
+
       try {
         await setDoc(doc(db, "settings", "general"), {
-          siteName: siteName,
-          logoUrl: logoUrl,
+          siteName,
+          logoUrl,
+          socialLinks,
           updatedAt: serverTimestamp()
         }, { merge: true });
-
-        alert("Website Settings updated!");
-        location.reload();
-      } catch(e) {
+        document.getElementById("sidebarSiteName").innerText = siteName;
+        await logAdminActivity("Settings", "Site & Social Updated", `Updated branding & social links for ${siteName}`);
+        alert("Website & social settings updated!");
+      } catch (e) {
         alert("Failed to update: " + e.message);
       }
     };
 
-    // 5. Image & HTML File Handlers
-    let selectedImageFile = null;
-    let hasHtmlFile = false;
+    document.getElementById("saveAdsBtn").onclick = async () => {
+      try {
+        await setDoc(doc(db, "settings", "ads"), {
+          headerAd: document.getElementById("adHeaderCode").value,
+          contentAd: document.getElementById("adContentCode").value,
+          footerAd: document.getElementById("adFooterCode").value,
+          updatedAt: serverTimestamp()
+        }, { merge: true });
+        await logAdminActivity("Settings", "Ads Updated", "Updated header, content, and footer ad scripts");
+        alert("Ad codes saved successfully!");
+      } catch (e) {
+        alert("Failed to save ads: " + e.message);
+      }
+    };
 
-    const imageInput = document.getElementById("postImageFileInput");
-    const previewBox = document.getElementById("imagePreviewBox");
-    const previewImg = document.getElementById("imagePreview");
-    const removeImgBtn = document.getElementById("removeImgBtn");
+    // 3. Users & Membership Management
+    async function loadUsers() {
+      try {
+        const usersSnap = await getDocs(collection(db, "users"));
+        cachedUsers = [];
+        const now = Date.now();
+        let vipCount = 0;
+        let activeCount = 0;
+        let bannedCount = 0;
 
-    imageInput.addEventListener("change", function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        selectedImageFile = file;
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-          previewImg.src = evt.target.result;
-          previewBox.style.display = "block";
-        };
-        reader.readAsDataURL(file);
+        usersSnap.forEach(uDoc => {
+          const u = { id: uDoc.id, ...uDoc.data() };
+          const isBanned = u.isBanned === true;
+          const isVip = u.isVip === true;
+          const hasTrial = u.accessExpiresAt && u.accessExpiresAt > now;
+
+          if (isBanned) bannedCount++;
+          if (isVip && !isBanned) vipCount++;
+          if (!isBanned && (isVip || hasTrial)) activeCount++;
+
+          cachedUsers.push(u);
+        });
+
+        document.getElementById("totalUsersCount").innerText = usersSnap.size;
+        document.getElementById("vipUsersCount").innerText = vipCount;
+        document.getElementById("activeUsersCount").innerText = activeCount;
+        document.getElementById("bannedUsersCount").innerText = bannedCount;
+
+        applyUserFilters();
+      } catch (e) {
+        console.error("Users load error:", e);
+      }
+    }
+
+    function applyUserFilters() {
+      const q = document.getElementById("userSearchInput").value.toLowerCase().trim();
+      const filter = document.getElementById("userFilterSelect").value;
+      const now = Date.now();
+
+      const filtered = cachedUsers.filter(u => {
+        const matchesText = !q || (u.email && u.email.toLowerCase().includes(q)) || (u.name && u.name.toLowerCase().includes(q));
+        if (!matchesText) return false;
+
+        const isBanned = u.isBanned === true;
+        const isVip = u.isVip === true;
+        const hasTrial = u.accessExpiresAt && u.accessExpiresAt > now;
+
+        if (filter === "vip") return isVip && !isBanned;
+        if (filter === "active") return !isVip && !isBanned && hasTrial;
+        if (filter === "expired") return !isVip && !isBanned && !hasTrial;
+        if (filter === "banned") return isBanned;
+        return true;
+      });
+
+      renderUserTable(filtered);
+    }
+
+    document.getElementById("userSearchInput").addEventListener("input", applyUserFilters);
+    document.getElementById("userFilterSelect").addEventListener("change", applyUserFilters);
+
+    function renderUserTable(users) {
+      const tbody = document.getElementById("userTableBody");
+      tbody.innerHTML = "";
+      if (!users.length) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted); padding:20px;">No matching users found.</td></tr>`;
+        return;
+      }
+
+      const now = Date.now();
+      users.forEach(u => {
+        const isBanned = u.isBanned === true;
+        const isVip = u.isVip === true;
+        const hasTrial = u.accessExpiresAt && u.accessExpiresAt > now;
+        const displayName = esc(u.name || (u.email ? u.email.split("@")[0] : "User"));
+        const email = esc(u.email || "");
+
+        let badgeHtml = "";
+        let expiryHtml = "";
+
+        if (isBanned) {
+          badgeHtml = `<span class="badge badge-banned"><i class="fas fa-ban"></i> Banned</span>`;
+          expiryHtml = `<span style="color:#fca5a5; font-size:11.5px;">${esc(u.banReason || "Restricted")}</span>`;
+        } else if (isVip) {
+          badgeHtml = `<span class="badge badge-vip"><i class="fas fa-crown"></i> VIP</span>`;
+          expiryHtml = `<b style="color:#fbbf24;">Unlimited</b>`;
+        } else if (hasTrial) {
+          const daysLeft = Math.ceil((u.accessExpiresAt - now) / (1000 * 60 * 60 * 24));
+          badgeHtml = `<span class="badge badge-active">Active (${daysLeft}d)</span>`;
+          expiryHtml = new Date(u.accessExpiresAt).toLocaleDateString();
+        } else {
+          badgeHtml = `<span class="badge badge-expired">Expired</span>`;
+          expiryHtml = `<span style="color:#f87171;">Expired</span>`;
+        }
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>
+            <b>${displayName}</b><br/>
+            <span style="font-size:11.5px; color:var(--text-muted);">${email}</span>
+          </td>
+          <td>${badgeHtml}</td>
+          <td>${expiryHtml}</td>
+          <td>
+            <button class="btn btn-sm ${isVip ? "btn-slate" : "btn-amber"} js-toggle-vip" data-id="${u.id}">
+              <i class="fas fa-crown"></i> ${isVip ? "Remove VIP" : "Grant VIP"}
+            </button>
+            <button class="btn btn-sm btn-green js-extend-trial" data-id="${u.id}" data-days="30">+30d</button>
+            <button class="btn btn-sm btn-blue js-extend-custom" data-id="${u.id}" title="Custom Trial Days">Custom</button>
+          </td>
+          <td>
+            <button class="btn btn-sm ${isBanned ? "btn-green" : "btn-red"} js-toggle-ban" data-id="${u.id}">
+              <i class="fas ${isBanned ? "fa-check" : "fa-ban"}"></i> ${isBanned ? "Unban" : "Ban"}
+            </button>
+            <button class="btn btn-sm btn-slate js-reset-pass" data-email="${email}" title="Password Reset"><i class="fas fa-key"></i></button>
+            <button class="btn btn-sm btn-red js-del-user" data-id="${u.id}" title="Delete Record"><i class="fas fa-trash"></i></button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById("userTableBody").addEventListener("click", async (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      const uid = btn.dataset.id;
+      const u = cachedUsers.find(x => x.id === uid);
+
+      if (btn.classList.contains("js-toggle-vip") && u) {
+        const nextVip = !u.isVip;
+        if (!confirm(`${nextVip ? "Grant VIP to" : "Remove VIP from"} ${u.email}?`)) return;
+        await updateDoc(doc(db, "users", uid), {
+          isVip: nextVip,
+          membershipTier: nextVip ? "vip" : "free"
+        });
+        await logAdminActivity("Users", nextVip ? "Granted VIP" : "Removed VIP", `User: ${u.email}`);
+        loadUsers();
+      } else if (btn.classList.contains("js-extend-trial") && u) {
+        const days = parseInt(btn.dataset.days, 10);
+        const now = Date.now();
+        const base = (u.accessExpiresAt && u.accessExpiresAt > now) ? u.accessExpiresAt : now;
+        const newExpiry = base + days * 86400000;
+        await updateDoc(doc(db, "users", uid), { accessExpiresAt: newExpiry, membershipTier: "trial" });
+        await logAdminActivity("Users", "Extended Trial", `Added ${days} days to ${u.email}`);
+        loadUsers();
+      } else if (btn.classList.contains("js-extend-custom") && u) {
+        const input = prompt(`Enter number of days to add (or negative to reduce) for ${u.email}:`, "7");
+        const days = parseInt(input, 10);
+        if (isNaN(days) || days === 0) return;
+        const now = Date.now();
+        const base = (u.accessExpiresAt && u.accessExpiresAt > now) ? u.accessExpiresAt : now;
+        const newExpiry = base + days * 86400000;
+        await updateDoc(doc(db, "users", uid), { accessExpiresAt: newExpiry });
+        await logAdminActivity("Users", "Custom Trial Adjustment", `Adjusted ${days} days for ${u.email}`);
+        loadUsers();
+      } else if (btn.classList.contains("js-toggle-ban") && u) {
+        const nextBan = !u.isBanned;
+        let reason = "";
+        if (nextBan) {
+          reason = prompt(`Ban reason for ${u.email} (optional):`, "Violation of terms");
+          if (reason === null) return;
+        } else if (!confirm(`Unban ${u.email}?`)) {
+          return;
+        }
+        await updateDoc(doc(db, "users", uid), { isBanned: nextBan, banReason: nextBan ? reason : "" });
+        await logAdminActivity("Users", nextBan ? "Banned User" : "Unbanned User", `${u.email}${reason ? " - " + reason : ""}`);
+        loadUsers();
+      } else if (btn.classList.contains("js-reset-pass")) {
+        const email = btn.dataset.email;
+        if (!confirm(`Send password reset email to ${email}?`)) return;
+        await sendPasswordResetEmail(auth, email);
+        await logAdminActivity("Users", "Password Reset Sent", `Reset link sent to ${email}`);
+        alert(`Password reset link sent to ${email}`);
+      } else if (btn.classList.contains("js-del-user") && u) {
+        if (!confirm(`Permanently delete user record for ${u.email}?`)) return;
+        await deleteDoc(doc(db, "users", uid));
+        await logAdminActivity("Users", "Deleted User", `Deleted user record: ${u.email}`);
+        loadUsers();
       }
     });
 
-    removeImgBtn.addEventListener("click", () => {
+    // 4. Activation Keys (Single, Bulk, Expiry, Usage)
+    function generateSixDigitCode() {
+      return Math.floor(100000 + Math.random() * 900000).toString();
+    }
+
+    document.getElementById("btnGenerateKey").onclick = async () => {
+      const days = parseInt(document.getElementById("keyDurationDays").value, 10);
+      const expStr = document.getElementById("singleKeyExpiryDate").value;
+      if (!days || days <= 0) return alert("Enter valid access days.");
+
+      const code = generateSixDigitCode();
+      const keyExpiresAt = expStr ? new Date(expStr + "T23:59:59").getTime() : null;
+
+      await addDoc(collection(db, "activation_keys"), {
+        code,
+        durationDays: days,
+        keyExpiresAt,
+        isUsed: false,
+        isRevoked: false,
+        batchNote: "Single",
+        createdAt: serverTimestamp()
+      });
+
+      await logAdminActivity("Keys", "Generated Key", `Key ${code} (${days}d)`);
+      alert(`Generated 6-digit key: ${code} (${days} days)`);
+    };
+
+    document.getElementById("btnGenerateBulkKeys").onclick = async () => {
+      const count = parseInt(document.getElementById("bulkKeyCount").value, 10);
+      const days = parseInt(document.getElementById("bulkKeyDays").value, 10);
+      const expStr = document.getElementById("bulkKeyExpiryDate").value;
+      const batchNote = document.getElementById("bulkBatchNote").value.trim() || "Bulk Batch";
+
+      if (!count || count < 1 || count > 100) return alert("Enter count between 1 and 100.");
+      if (!days || days <= 0) return alert("Enter valid access days.");
+
+      const keyExpiresAt = expStr ? new Date(expStr + "T23:59:59").getTime() : null;
+      const batch = writeBatch(db);
+      const generated = [];
+
+      for (let i = 0; i < count; i++) {
+        const code = generateSixDigitCode();
+        generated.push(code);
+        const refDoc = doc(collection(db, "activation_keys"));
+        batch.set(refDoc, {
+          code,
+          durationDays: days,
+          keyExpiresAt,
+          isUsed: false,
+          isRevoked: false,
+          batchNote,
+          createdAt: serverTimestamp()
+        });
+      }
+
+      await batch.commit();
+      await logAdminActivity("Keys", "Bulk Generated Keys", `Generated ${count} keys (${days}d) - ${batchNote}`);
+
+      const outBox = document.getElementById("bulkOutputBox");
+      outBox.value = generated.join("\n");
+      outBox.style.display = "block";
+      document.getElementById("btnCopyLastBulk").style.display = "inline-flex";
+      alert(`Generated ${count} keys successfully!`);
+    };
+
+    document.getElementById("btnCopyLastBulk").onclick = () => {
+      const text = document.getElementById("bulkOutputBox").value;
+      navigator.clipboard.writeText(text);
+      alert("Copied all generated keys!");
+    };
+
+    function listenKeys() {
+      if (keysUnsub) keysUnsub();
+      const q = query(collection(db, "activation_keys"), orderBy("createdAt", "desc"));
+      keysUnsub = onSnapshot(q, (snap) => {
+        cachedKeys = [];
+        let activeCount = 0;
+        const now = Date.now();
+        snap.forEach(d => {
+          const k = { id: d.id, ...d.data() };
+          const isExpired = k.keyExpiresAt && k.keyExpiresAt < now;
+          if (!k.isUsed && !k.isRevoked && !isExpired) activeCount++;
+          cachedKeys.push(k);
+        });
+        document.getElementById("totalKeysCount").innerText = activeCount;
+        renderKeysTable();
+      });
+    }
+
+    document.getElementById("keyFilterSelect").addEventListener("change", renderKeysTable);
+
+    function renderKeysTable() {
+      const filter = document.getElementById("keyFilterSelect").value;
+      const tbody = document.getElementById("keysTableBody");
+      tbody.innerHTML = "";
+      const now = Date.now();
+
+      const filtered = cachedKeys.filter(k => {
+        const isExpired = k.keyExpiresAt && k.keyExpiresAt < now;
+        const isActive = !k.isUsed && !k.isRevoked && !isExpired;
+        if (filter === "active") return isActive;
+        if (filter === "used") return k.isUsed;
+        if (filter === "expired") return !k.isUsed && (k.isRevoked || isExpired);
+        return true;
+      });
+
+      if (!filtered.length) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No keys match this filter.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(k => {
+        const isExpired = k.keyExpiresAt && k.keyExpiresAt < now;
+        let statusBadge = `<span class="badge badge-active">Active</span>`;
+        if (k.isUsed) statusBadge = `<span class="badge badge-free">Used</span>`;
+        else if (k.isRevoked) statusBadge = `<span class="badge badge-banned">Revoked</span>`;
+        else if (isExpired) statusBadge = `<span class="badge badge-expired">Expired</span>`;
+
+        const expText = k.keyExpiresAt ? new Date(k.keyExpiresAt).toLocaleDateString() : "Never";
+        const usageText = k.isUsed
+          ? `${esc(k.usedBy || "Redeemed")}`
+          : `<span style="color:var(--text-muted);">${esc(k.batchNote || "-")}</span>`;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><b style="color:var(--accent); font-size:15px; letter-spacing:1px;">${esc(k.code)}</b></td>
+          <td>${k.durationDays} Days</td>
+          <td>${expText}</td>
+          <td>${statusBadge}</td>
+          <td>${usageText}</td>
+          <td>
+            <button class="btn btn-sm btn-slate js-copy-key" data-code="${esc(k.code)}"><i class="fas fa-copy"></i></button>
+            ${!k.isUsed ? `<button class="btn btn-sm btn-amber js-revoke-key" data-id="${k.id}">${k.isRevoked ? "Enable" : "Revoke"}</button>` : ""}
+            <button class="btn btn-sm btn-red js-del-key" data-id="${k.id}"><i class="fas fa-trash"></i></button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById("keysTableBody").addEventListener("click", async (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      if (btn.classList.contains("js-copy-key")) {
+        navigator.clipboard.writeText(btn.dataset.code);
+        alert("Copied key: " + btn.dataset.code);
+      } else if (btn.classList.contains("js-revoke-key")) {
+        const k = cachedKeys.find(x => x.id === btn.dataset.id);
+        if (!k) return;
+        const nextRevoke = !k.isRevoked;
+        await updateDoc(doc(db, "activation_keys", k.id), { isRevoked: nextRevoke });
+        await logAdminActivity("Keys", nextRevoke ? "Revoked Key" : "Re-enabled Key", `Key ${k.code}`);
+      } else if (btn.classList.contains("js-del-key")) {
+        const k = cachedKeys.find(x => x.id === btn.dataset.id);
+        if (!confirm(`Delete key ${k?.code || ""}?`)) return;
+        await deleteDoc(doc(db, "activation_keys", btn.dataset.id));
+        await logAdminActivity("Keys", "Deleted Key", `Deleted key ${k?.code || btn.dataset.id}`);
+      }
+    });
+
+    document.getElementById("btnExportActiveKeys").onclick = () => {
+      const now = Date.now();
+      const active = cachedKeys
+        .filter(k => !k.isUsed && !k.isRevoked && !(k.keyExpiresAt && k.keyExpiresAt < now))
+        .map(k => `${k.code} (${k.durationDays}d)`);
+      if (!active.length) return alert("No active keys to copy.");
+      navigator.clipboard.writeText(active.join("\n"));
+      alert(`Copied ${active.length} active keys to clipboard!`);
+    };
+
+    // 5. Posts & Bots + Moderation
+    const imageInput = document.getElementById("postImageFileInput");
+    const previewBox = document.getElementById("imagePreviewBox");
+    const previewImg = document.getElementById("imagePreview");
+
+    imageInput.addEventListener("change", (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      selectedImageFile = file;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        previewImg.src = evt.target.result;
+        previewBox.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    });
+
+    document.getElementById("removeImgBtn").onclick = () => {
       selectedImageFile = null;
       imageInput.value = "";
       previewBox.style.display = "none";
       previewImg.src = "";
-    });
+    };
 
-    document.getElementById("htmlFileInput").addEventListener("change", function(e) {
+    document.getElementById("htmlFileInput").addEventListener("change", (e) => {
       const file = e.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (evt) => {
-          document.getElementById("postHtmlContent").value = evt.target.result;
-          hasHtmlFile = true;
-        };
-        reader.readAsText(file);
-      }
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = (evt) => {
+        document.getElementById("postHtmlContent").value = evt.target.result;
+        hasHtmlFile = true;
+      };
+      reader.readAsText(file);
     });
-
-    // 6. Post / Bot Edit Mode Handler
-    window.startEditPost = async (id) => {
-      try {
-        const docSnap = await getDoc(doc(db, "posts", id));
-        if (!docSnap.exists()) return alert("Bot or post not found!");
-
-        const data = docSnap.data();
-        editingPostId = id;
-
-        document.getElementById("postTitle").value = data.title || "";
-        document.getElementById("postDescription").value = data.description || "";
-        document.getElementById("postHtmlContent").value = data.htmlContent || "";
-        document.getElementById("postThumbnailUrl").value = data.thumbnail || "";
-
-        document.getElementById("formHeaderTitle").innerText = "Edit Bot / Post";
-        document.getElementById("publishBtnText").innerText = "Update Bot / Post";
-        document.getElementById("cancelEditBtn").style.display = "inline-flex";
-
-        document.getElementById("botFormCard").scrollIntoView({ behavior: "smooth" });
-      } catch (err) {
-        alert("Error loading post: " + err.message);
-      }
-    };
-
-    document.getElementById("cancelEditBtn").onclick = () => {
-      resetPublishForm();
-    };
 
     function resetPublishForm() {
       editingPostId = null;
       document.getElementById("postTitle").value = "";
+      document.getElementById("postStatus").value = "published";
       document.getElementById("postDescription").value = "";
       document.getElementById("postHtmlContent").value = "";
       document.getElementById("postThumbnailUrl").value = "";
@@ -721,10 +1562,11 @@
       document.getElementById("publishBtnText").innerText = "Publish Post";
       document.getElementById("cancelEditBtn").style.display = "none";
     }
+    document.getElementById("cancelEditBtn").onclick = resetPublishForm;
 
-    // Publish & Update Button
     document.getElementById("publishBtn").onclick = async () => {
       const title = document.getElementById("postTitle").value.trim();
+      const status = document.getElementById("postStatus").value;
       const description = document.getElementById("postDescription").value.trim();
       const htmlContent = document.getElementById("postHtmlContent").value.trim();
       let thumbnailUrl = document.getElementById("postThumbnailUrl").value.trim();
@@ -733,275 +1575,317 @@
 
       const publishBtn = document.getElementById("publishBtn");
       const publishBtnText = document.getElementById("publishBtnText");
+      publishBtn.disabled = true;
+      publishBtnText.innerText = editingPostId ? "Updating..." : "Publishing...";
 
       try {
-        publishBtn.disabled = true;
-        publishBtnText.innerText = editingPostId ? "Updating..." : "Publishing...";
-
         if (selectedImageFile) {
           try {
             const fileRef = ref(storage, `posts/${Date.now()}_${selectedImageFile.name}`);
-            const snapshot = await uploadBytes(fileRef, selectedImageFile);
-            thumbnailUrl = await getDownloadURL(snapshot.ref);
-          } catch(storageErr) {
+            const snap = await uploadBytes(fileRef, selectedImageFile);
+            thumbnailUrl = await getDownloadURL(snap.ref);
+          } catch {
             thumbnailUrl = previewImg.src;
           }
         }
 
+        const isBot = hasHtmlFile || htmlContent.length > 0;
         const postData = {
-          title: title,
-          description: description,
-          htmlContent: htmlContent,
-          isHtml: hasHtmlFile || (htmlContent.length > 0),
-          category: hasHtmlFile || (htmlContent.length > 0) ? "Bot" : "Post",
+          title,
+          status,
+          description,
+          htmlContent,
+          isHtml: isBot,
+          category: isBot ? "Bot" : "Post",
           updatedAt: serverTimestamp()
         };
-
-        if (thumbnailUrl) {
-          postData.thumbnail = thumbnailUrl;
-        }
+        if (thumbnailUrl) postData.thumbnail = thumbnailUrl;
 
         if (editingPostId) {
           await updateDoc(doc(db, "posts", editingPostId), postData);
-          alert("✅ Post updated successfully!");
+          await logAdminActivity("Posts", "Updated Post/Bot", title);
+          alert("Post updated!");
         } else {
           postData.createdAt = serverTimestamp();
-          if (!thumbnailUrl) {
+          if (!postData.thumbnail) {
             postData.thumbnail = "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop";
           }
           await addDoc(collection(db, "posts"), postData);
-          alert("✅ New bot published successfully!");
+          await logAdminActivity("Posts", "Published Post/Bot", title);
+          alert("Published successfully!");
         }
 
         resetPublishForm();
-        loadAdminData();
-      } catch(e) {
-        alert("Failed to save: " + e.message);
+        loadPosts();
+      } catch (e) {
+        alert("Failed: " + e.message);
       } finally {
         publishBtn.disabled = false;
       }
     };
 
-    window.deletePost = async (id, title) => {
-      if (confirm(`Are you sure you want to delete "${title}"?`)) {
-        try {
-          await deleteDoc(doc(db, "posts", id));
-          alert("Item deleted successfully!");
-          loadAdminData();
-        } catch(err) {
-          alert("Error: " + err.message);
-        }
+    async function loadPosts() {
+      try {
+        const snap = await getDocs(collection(db, "posts"));
+        cachedPosts = [];
+        let botsCount = 0;
+        let articlesCount = 0;
+
+        snap.forEach(d => {
+          const p = { id: d.id, ...d.data() };
+          if (p.isHtml) botsCount++;
+          else articlesCount++;
+          cachedPosts.push(p);
+        });
+
+        document.getElementById("totalBotsCount").innerText = botsCount;
+        document.getElementById("totalArticlesCount").innerText = articlesCount;
+        renderPostsTable();
+      } catch (e) {
+        console.error("Posts load error:", e);
       }
-    };
+    }
 
-    window.sendResetEmail = async (email) => {
-      if (confirm(`Send password reset link to: ${email}?`)) {
-        try {
-          await sendPasswordResetEmail(auth, email);
-          alert(`Password reset link sent to ${email}!`);
-        } catch(err) { alert("Error: " + err.message); }
-      }
-    };
+    document.getElementById("postSearchInput").addEventListener("input", renderPostsTable);
 
-    // 7. User VIP & Trial Days Management
-    window.toggleUserVip = async (uid, currentVipStatus) => {
-      const newStatus = !currentVipStatus;
-      const msg = newStatus 
-        ? "Promote this user to VIP? (Unlimited access without keys)" 
-        : "Revoke VIP status for this user?";
+    function renderPostsTable() {
+      const q = document.getElementById("postSearchInput").value.toLowerCase().trim();
+      const tbody = document.getElementById("postsTableBody");
+      tbody.innerHTML = "";
 
-      if (confirm(msg)) {
-        try {
-          await updateDoc(doc(db, "users", uid), { isVip: newStatus });
-          alert(newStatus ? "User is now VIP Member!" : "VIP status removed.");
-          loadAdminData();
-        } catch(err) { alert("Failed: " + err.message); }
-      }
-    };
-
-    window.extendUserDays = async (uid, currentExpiry, daysToAdd) => {
-      if (confirm(`Extend user access by ${daysToAdd} days?`)) {
-        try {
-          const now = Date.now();
-          const baseTime = (currentExpiry && currentExpiry > now) ? currentExpiry : now;
-          const newExpiry = baseTime + (daysToAdd * 24 * 60 * 60 * 1000);
-
-          await updateDoc(doc(db, "users", uid), { accessExpiresAt: newExpiry });
-          alert(`Access extended by ${daysToAdd} days!`);
-          loadAdminData();
-        } catch(err) { alert("Failed: " + err.message); }
-      }
-    };
-
-    window.deleteUserRecord = async (uid, email) => {
-      if (confirm(`Are you sure you want to delete user ${email}?`)) {
-        try {
-          await deleteDoc(doc(db, "users", uid));
-          alert("User record deleted!");
-          loadAdminData();
-        } catch(err) { alert("Error: " + err.message); }
-      }
-    };
-
-    document.getElementById("userSearchInput").addEventListener("input", (e) => {
-      const q = e.target.value.toLowerCase().trim();
-      const filtered = cachedUsers.filter(u => 
-        (u.email && u.email.toLowerCase().includes(q)) || 
-        (u.name && u.name.toLowerCase().includes(q))
-      );
-      renderUserTable(filtered);
-    });
-
-    function renderUserTable(users) {
-      const userTable = document.getElementById("userTableBody");
-      userTable.innerHTML = "";
-
-      if (!users || users.length === 0) {
-        userTable.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8; padding:20px;">No users found.</td></tr>`;
+      const filtered = cachedPosts.filter(p => !q || (p.title && p.title.toLowerCase().includes(q)));
+      if (!filtered.length) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-muted);">No posts found.</td></tr>`;
         return;
       }
 
-      users.forEach(u => {
-        const isVip = u.isVip === true;
-        const now = Date.now();
-        const hasValidTrial = u.accessExpiresAt && u.accessExpiresAt > now;
-
-        let badgeHtml = '';
-        let expiryHtml = '';
-
-        if (isVip) {
-          badgeHtml = `<span class="badge-vip"><i class="fas fa-crown"></i> VIP Member</span>`;
-          expiryHtml = `<b style="color:#f59e0b;">Unlimited</b>`;
-        } else if (hasValidTrial) {
-          const daysLeft = Math.ceil((u.accessExpiresAt - now) / (1000 * 60 * 60 * 24));
-          badgeHtml = `<span class="badge-free">Active (${daysLeft}d left)</span>`;
-          expiryHtml = new Date(u.accessExpiresAt).toLocaleDateString();
-        } else {
-          badgeHtml = `<span class="badge-expired">Trial Expired</span>`;
-          expiryHtml = `<span style="color:#ef4444;">Expired</span>`;
-        }
+      filtered.forEach(p => {
+        const thumb = esc(p.thumbnail || "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=100&auto=format&fit=crop");
+        const dateStr = p.createdAt?.toDate ? p.createdAt.toDate().toLocaleDateString() : "Recent";
+        const typeHtml = p.isHtml
+          ? `<span style="color:#34d399; font-weight:700;"><i class="fas fa-robot"></i> Bot</span>`
+          : `<span>Post</span>`;
+        const status = p.status || "published";
+        const statusBadge = status === "published"
+          ? `<span class="badge badge-active">Published</span>`
+          : `<span class="badge badge-hidden">${esc(status)}</span>`;
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
+          <td><img src="${thumb}" class="table-thumb" alt="thumb" /></td>
+          <td><b>${esc(p.title)}</b></td>
+          <td>${typeHtml}</td>
+          <td>${statusBadge}</td>
+          <td>${dateStr}</td>
           <td>
-            <b>${u.name || u.email.split('@')[0]}</b><br/>
-            <span style="font-size:11.5px; color:#94a3b8;">${u.email}</span>
-          </td>
-          <td>${badgeHtml}</td>
-          <td>${expiryHtml}</td>
-          <td>
-            ${isVip 
-              ? `<button class="btn-vip-off" onclick="toggleUserVip('${u.id}', true)">Remove VIP</button>` 
-              : `<button class="btn-vip-on" onclick="toggleUserVip('${u.id}', false)"><i class="fas fa-crown"></i> Make VIP</button>`
-            }
-            <button class="btn-extend-days" style="margin-left:4px;" onclick="extendUserDays('${u.id}', ${u.accessExpiresAt || 0}, 30)">+30 Days</button>
-          </td>
-          <td>
-            <button class="btn-reset" onclick="sendResetEmail('${u.email}')" title="Send Password Reset"><i class="fas fa-key"></i></button>
-            <button class="btn-delete" style="padding:5px 8px; margin-left:3px;" onclick="deleteUserRecord('${u.id}', '${u.email}')" title="Delete User"><i class="fas fa-trash"></i></button>
+            <button class="btn btn-sm btn-amber js-edit-post" data-id="${p.id}"><i class="fas fa-edit"></i> Edit</button>
+            <button class="btn btn-sm btn-slate js-toggle-post-status" data-id="${p.id}">${status === "published" ? "Hide" : "Publish"}</button>
+            <button class="btn btn-sm btn-red js-del-post" data-id="${p.id}"><i class="fas fa-trash"></i></button>
           </td>
         `;
-        userTable.appendChild(tr);
+        tbody.appendChild(tr);
       });
     }
 
-    // 8. Load All Dashboard Data & Analytics
-    async function loadAdminData() {
-      // Settings and Ads
-      try {
-        const settingsDoc = await getDoc(doc(db, "settings", "general"));
-        if (settingsDoc.exists()) {
-          const s = settingsDoc.data();
-          if (s.siteName) {
-            document.getElementById("settingSiteName").value = s.siteName;
-            document.getElementById("adminPanelHeaderName").innerText = s.siteName + " Admin Panel";
-          }
-          if (s.logoUrl) document.getElementById("settingLogoUrl").value = s.logoUrl;
-        }
+    document.getElementById("postsTableBody").addEventListener("click", async (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      const id = btn.dataset.id;
+      const p = cachedPosts.find(x => x.id === id);
+      if (!p) return;
 
-        const adsDoc = await getDoc(doc(db, "settings", "ads"));
-        if (adsDoc.exists()) {
-          const a = adsDoc.data();
-          if (a.headerAd) document.getElementById("adHeaderCode").value = a.headerAd;
-          if (a.contentAd) document.getElementById("adContentCode").value = a.contentAd;
-          if (a.footerAd) document.getElementById("adFooterCode").value = a.footerAd;
-        }
-      } catch(e) {
-        console.error("Settings load error:", e);
+      if (btn.classList.contains("js-edit-post")) {
+        editingPostId = id;
+        document.getElementById("postTitle").value = p.title || "";
+        document.getElementById("postStatus").value = p.status || "published";
+        document.getElementById("postDescription").value = p.description || "";
+        document.getElementById("postHtmlContent").value = p.htmlContent || "";
+        document.getElementById("postThumbnailUrl").value = p.thumbnail || "";
+        document.getElementById("formHeaderTitle").innerText = "Edit Bot / Post";
+        document.getElementById("publishBtnText").innerText = "Update Bot / Post";
+        document.getElementById("cancelEditBtn").style.display = "inline-flex";
+        document.getElementById("botFormCard").scrollIntoView({ behavior: "smooth" });
+      } else if (btn.classList.contains("js-toggle-post-status")) {
+        const nextStatus = (p.status || "published") === "published" ? "hidden" : "published";
+        await updateDoc(doc(db, "posts", id), { status: nextStatus });
+        await logAdminActivity("Posts", "Moderated Post", `${p.title} -> ${nextStatus}`);
+        loadPosts();
+      } else if (btn.classList.contains("js-del-post")) {
+        if (!confirm(`Delete "${p.title}"?`)) return;
+        await deleteDoc(doc(db, "posts", id));
+        await logAdminActivity("Posts", "Deleted Post", p.title);
+        loadPosts();
       }
+    });
 
-      // Posts and Bots Count & Table
+    // 6. Comment Moderation
+    async function loadComments() {
       try {
-        const postsSnap = await getDocs(collection(db, "posts"));
-        document.getElementById("totalPostsCount").innerText = postsSnap.size;
-        const postsTable = document.getElementById("postsTableBody");
-        postsTable.innerHTML = "";
-
-        if (postsSnap.empty) {
-          postsTable.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#94a3b8;">No posts uploaded yet.</td></tr>`;
-        } else {
-          postsSnap.forEach(documentItem => {
-            const p = documentItem.data();
-            const id = documentItem.id;
-            const thumb = p.thumbnail || "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=100&auto=format&fit=crop";
-            const dateStr = p.createdAt ? new Date(p.createdAt.toDate()).toLocaleDateString() : 'Recent';
-            const isBot = p.isHtml ? `<span style="color:#10b981; font-weight:700;"><i class="fas fa-robot"></i> Bot</span>` : `Post`;
-
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-              <td><img src="${thumb}" class="table-thumb" alt="${p.title}" /></td>
-              <td><b>${p.title}</b></td>
-              <td>${isBot}</td>
-              <td>${dateStr}</td>
-              <td>
-                <button class="btn-edit" onclick="startEditPost('${id}')">
-                  <i class="fas fa-edit"></i> Edit
-                </button>
-                <button class="btn-delete" style="margin-left:4px;" onclick="deletePost('${id}', '${p.title.replace(/'/g, "\\'")}')">
-                  <i class="fas fa-trash-alt"></i> Delete
-                </button>
-              </td>
-            `;
-            postsTable.appendChild(tr);
-          });
-        }
-      } catch(e) { console.error("Posts load error:", e); }
-
-      // Users List & VIP Count
-      try {
-        const usersSnap = await getDocs(collection(db, "users"));
-        document.getElementById("totalUsersCount").innerText = usersSnap.size;
-
-        cachedUsers = [];
-        let vipCount = 0;
-
-        usersSnap.forEach(uDoc => {
-          const u = { id: uDoc.id, ...uDoc.data() };
-          if (u.isVip === true) vipCount++;
-          cachedUsers.push(u);
-        });
-
-        document.getElementById("vipUsersCount").innerText = vipCount;
-        renderUserTable(cachedUsers);
-      } catch(e) { console.error("Users load error: ", e); }
-
-      // Analytics: Total All-Time & Today's (24h) Visitors
-      try {
-        const analyticsRef = collection(db, "analytics");
-
-        // 1. All-Time Total Visitors
-        const allTimeSnap = await getDocs(analyticsRef);
-        document.getElementById("allTimeVisitorsCount").innerText = allTimeSnap.size.toLocaleString();
-
-        // 2. Today's Visitors (Past 24 Hours)
-        const past24Hours = new Date(Date.now() - 24 * 60 * 60 * 1000);
-        const q24h = query(analyticsRef, where("timestamp", ">=", Timestamp.fromDate(past24Hours)));
-        const snap24h = await getDocs(q24h);
-        document.getElementById("recentVisitorsCount").innerText = snap24h.size.toLocaleString();
-      } catch(err) {
-        console.error("Analytics fetch error:", err);
+        const snap = await getDocs(query(collection(db, "comments"), orderBy("createdAt", "desc")));
+        cachedComments = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderCommentsTable();
+      } catch (e) {
+        document.getElementById("commentsTableBody").innerHTML =
+          `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No comments collection or empty.</td></tr>`;
       }
     }
+
+    document.getElementById("commentFilterSelect").addEventListener("change", renderCommentsTable);
+
+    function renderCommentsTable() {
+      const filter = document.getElementById("commentFilterSelect").value;
+      const tbody = document.getElementById("commentsTableBody");
+      tbody.innerHTML = "";
+
+      const filtered = cachedComments.filter(c => filter === "all" || (c.status || "pending") === filter);
+      if (!filtered.length) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:var(--text-muted);">No comments found.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(c => {
+        const status = c.status || "pending";
+        let badge = `<span class="badge badge-vip">Pending</span>`;
+        if (status === "approved") badge = `<span class="badge badge-active">Approved</span>`;
+        if (status === "hidden") badge = `<span class="badge badge-hidden">Hidden</span>`;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><b>${esc(c.authorName || "User")}</b><br/><span style="font-size:11px; color:var(--text-muted);">${esc(c.authorEmail || "")}</span></td>
+          <td>${esc(c.postTitle || c.postId || "-")}</td>
+          <td style="max-width:300px;">${esc(c.text || "")}</td>
+          <td>${badge}</td>
+          <td>
+            <button class="btn btn-sm btn-green js-mod-comment" data-id="${c.id}" data-status="approved">Approve</button>
+            <button class="btn btn-sm btn-slate js-mod-comment" data-id="${c.id}" data-status="hidden">Hide</button>
+            <button class="btn btn-sm btn-red js-del-comment" data-id="${c.id}"><i class="fas fa-trash"></i></button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById("commentsTableBody").addEventListener("click", async (e) => {
+      const btn = e.target.closest("button");
+      if (!btn) return;
+      const id = btn.dataset.id;
+      if (btn.classList.contains("js-mod-comment")) {
+        const status = btn.dataset.status;
+        await updateDoc(doc(db, "comments", id), { status });
+        await logAdminActivity("Comments", `Comment ${status}`, `Comment ID: ${id}`);
+        loadComments();
+      } else if (btn.classList.contains("js-del-comment")) {
+        if (!confirm("Delete this comment permanently?")) return;
+        await deleteDoc(doc(db, "comments", id));
+        await logAdminActivity("Comments", "Deleted Comment", `Comment ID: ${id}`);
+        loadComments();
+      }
+    });
+
+    // 7. Daily, Weekly & Monthly Analytics
+    async function loadAnalytics() {
+      try {
+        const analyticsRef = collection(db, "analytics");
+        const allSnap = await getDocs(analyticsRef);
+        document.getElementById("allTimeVisitorsCount").innerText = allSnap.size.toLocaleString();
+
+        const nowMs = Date.now();
+        const dayMs = 86400000;
+        const t24h = nowMs - dayMs;
+        const t7d = nowMs - 7 * dayMs;
+        const t30d = nowMs - 30 * dayMs;
+
+        let daily = 0, weekly = 0, monthly = 0;
+
+        // Build last 7 days buckets
+        const buckets = [];
+        for (let i = 6; i >= 0; i--) {
+          const d = new Date(nowMs - i * dayMs);
+          buckets.push({
+            key: d.toISOString().slice(0, 10),
+            label: d.toLocaleDateString(undefined, { weekday: "short" }),
+            count: 0
+          });
+        }
+
+        allSnap.forEach(docItem => {
+          const ts = docItem.data().timestamp;
+          if (!ts || !ts.toMillis) return;
+          const ms = ts.toMillis();
+          if (ms >= t24h) daily++;
+          if (ms >= t7d) weekly++;
+          if (ms >= t30d) monthly++;
+
+          const dateKey = new Date(ms).toISOString().slice(0, 10);
+          const bucket = buckets.find(b => b.key === dateKey);
+          if (bucket) bucket.count++;
+        });
+
+        document.getElementById("dailyVisitorsCount").innerText = daily.toLocaleString();
+        document.getElementById("weeklyVisitorsCount").innerText = weekly.toLocaleString();
+        document.getElementById("monthlyVisitorsCount").innerText = monthly.toLocaleString();
+
+        const maxVal = Math.max(1, ...buckets.map(b => b.count));
+        const chartBox = document.getElementById("weeklyChartBox");
+        chartBox.innerHTML = buckets.map(b => {
+          const heightPct = Math.round((b.count / maxVal) * 100);
+          return `
+            <div class="chart-col">
+              <div class="chart-val">${b.count}</div>
+              <div class="chart-bar" style="height:${Math.max(4, heightPct)}%;"></div>
+              <div class="chart-lbl">${b.label}</div>
+            </div>
+          `;
+        }).join("");
+      } catch (err) {
+        console.error("Analytics error:", err);
+      }
+    }
+
+    // 8. Admin Activity Logs
+    function listenLogs() {
+      if (logsUnsub) logsUnsub();
+      const q = query(collection(db, "admin_logs"), orderBy("createdAt", "desc"), limit(100));
+      logsUnsub = onSnapshot(q, (snap) => {
+        cachedLogs = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+        renderLogsTable();
+      });
+    }
+
+    document.getElementById("logCategoryFilter").addEventListener("change", renderLogsTable);
+
+    function renderLogsTable() {
+      const cat = document.getElementById("logCategoryFilter").value;
+      const tbody = document.getElementById("logsTableBody");
+      tbody.innerHTML = "";
+
+      const filtered = cachedLogs.filter(l => cat === "all" || l.category === cat);
+      if (!filtered.length) {
+        tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--text-muted);">No activity logs yet.</td></tr>`;
+        return;
+      }
+
+      filtered.forEach(l => {
+        const timeStr = l.createdAt?.toDate ? l.createdAt.toDate().toLocaleString() : "Just now";
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td style="white-space:nowrap; color:var(--text-muted); font-size:12px;">${timeStr}</td>
+          <td><span class="badge badge-free">${esc(l.category)}</span></td>
+          <td><b>${esc(l.action)}</b></td>
+          <td>${esc(l.details)}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    document.getElementById("btnClearLogs").onclick = async () => {
+      if (!confirm("Delete all currently loaded activity logs?")) return;
+      const batch = writeBatch(db);
+      cachedLogs.forEach(l => batch.delete(doc(db, "admin_logs", l.id)));
+      await batch.commit();
+    };
+
+    checkAdminSession();
   </script>
 </body>
 </html>
